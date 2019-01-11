@@ -21,10 +21,7 @@ public class PlayerHealthBar : MonoBehaviour
     void Update()
     {
         // float xValue = -(player.healthAsPercentage / 2f) - 0.5f;
-        float yValue = (player.healthAsPercentage * 0.01f) * -421f;
-        healthPoolHolder.transform.localPosition = Vector3.zero;
-        // healthPoolHolder.uvRect = new Rect(healthPoolHolder.uvRect.xValue, healthPoolHolder.uvRect.xValue)
-        // healthPoolSprite.
-        // healthPoolSprite.uvRect = new Rect(xValue, 0f, 0.5f, 1f);
+        float yValue = (185f * player.healthAsPercentage) - 185f;
+        healthPoolHolder.transform.localPosition = new Vector3(0, yValue, 0);
     }
 }

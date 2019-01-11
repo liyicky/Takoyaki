@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] float maxHealthPoints = 100f;
 
-    float currentHealthPoint = 100f;
+    [SerializeField] float currentHealthPoint = 100f;
 
     public float healthAsPercentage
     {
