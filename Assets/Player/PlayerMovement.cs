@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] float walkMoveStopRadius = 0.2f;
     [SerializeField] float attackMoveStopRadius = 5f;
+    [SerializeField] const int walkableLayerNumber = 9;
+    [SerializeField] const int enemyLayerNumber = 10;
 
     ThirdPersonCharacter thirdPersonCharacter;   // A reference to the ThirdPersonCharacter on the object
     CameraRaycaster cameraRaycaster;
@@ -21,45 +23,25 @@ public class PlayerMovement : MonoBehaviour
         cameraRaycaster = Camera.main.GetComponent<CameraRaycaster>();
         thirdPersonCharacter = GetComponent<ThirdPersonCharacter>();
         currentDestinationPoint = transform.position;
+        cameraRaycaster.notifyMouseClickObservers += ProcessMouseMovement;
     }
 
-    // Fixed update is called in sync with physics
-    private void FixedUpdate()
+    private void ProcessMouseMovement(RaycastHit raycastHit, int layerHit)
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            isInDirectMode = !isInDirectMode;
-            if (!isInDirectMode) currentDestinationPoint = transform.position; // Clear the click target
-        }
 
-        if (isInDirectMode)
+        clickPoint = raycastHit.transform.position;
+        switch (layerHit)
         {
-            ProcessKeyboardMovement();
-        }
-        else
-        {
-            ProcessMouseMovement();
-        }
-    }
-
-    private void ProcessMouseMovement()
-    {
-        if (Input.GetMouseButton(0))
-        {
-            clickPoint = cameraRaycaster.hit.point;
-            switch (cameraRaycaster.currentLayerHit)
-            {
-                case Layer.Walkable:
-                    currentDestinationPoint = ShortDestination(clickPoint, walkMoveStopRadius);
-                    break;
-                case Layer.Enemy:
-                    currentDestinationPoint = ShortDestination(clickPoint, attackMoveStopRadius);
-                    break;
-                default:
-                    print("ERROR");
-                    return;
+            case walkableLayerNumber:
+                currentDestinationPoint = ShortDestination(clickPoint, walkMoveStopRadius);
+                break;
+            case enemyLayerNumber:
+                currentDestinationPoint = ShortDestination(clickPoint, attackMoveStopRadius);
+                break;
+            default:
+                print("ERROR");
+                return;
             }
-        }
 
         WalkToDestination();
     }

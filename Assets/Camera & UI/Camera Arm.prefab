@@ -93,11 +93,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 411435648466135123}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bb317b666ac941f58d820a493c789a3, type: 3}
+  m_Script: {fileID: 11500000, guid: d02853f5d34bd8f429969ac34c466d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerPriorities: 0a00000009000000
-  distanceToBackground: 100
+  layerPriorities: 0a000000090000000b000000
 --- !u!114 &302814878
 MonoBehaviour:
   m_ObjectHideFlags: 0
