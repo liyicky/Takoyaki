@@ -6,8 +6,10 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
 
-    [SerializeField] float projectileSpeed;
-    float damageCaused = 10f;
+    // Note: Other classes can set
+    public float projectileSpeed;
+    public float damageCaused;
+
     // Start is called before the first frame update
     void Start()
     {

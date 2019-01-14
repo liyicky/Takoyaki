@@ -7,15 +7,25 @@ public class Enemy : MonoBehaviour, IDamageable
 {
 
     [SerializeField] float maxHealthPoints = 100f;
+
     [SerializeField] float aggroRadius = 10f;
     [SerializeField] float attackRadius = 5f;
+
+    [SerializeField] float damagePerShot = 9f;
+    [SerializeField] float fireInterval = 1f;
+
     [SerializeField] GameObject projectileToUse;
+    [SerializeField] GameObject projectileSocket;
+
+    [SerializeField] Vector3 aimOffset = new Vector3(0f, 1f, 0f);
 
     public float healthAsPercentage { get { return currentHealthPoint / maxHealthPoints; } }
 
     float currentHealthPoint = 100f;
     AICharacterControl aiController = null;
     GameObject player = null;
+
+    bool isAttacking = false;
 
     public void TakeDamage(float damage)
     {
@@ -35,21 +45,38 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
 
-        if (distanceToPlayer <= attackRadius)
+        if (distanceToPlayer <= attackRadius && !isAttacking)
         {
-            print(gameObject.name + "attacking player");
-            // TODO: spawn projectile
+            isAttacking = true;
+            InvokeRepeating("SpawnProjectile", 0f, fireInterval); //TODO: Switch to coroutines
+        }
+
+        if (distanceToPlayer > attackRadius)
+        {
+            isAttacking = false;
+            CancelInvoke("SpawnProjectile");
         }
 
         if (distanceToPlayer <= aggroRadius)
-        {
+        {   
             aiController.SetTarget(player.transform);
         }
         else
         {
+            // isAttacking = false;
             aiController.SetTarget(transform);
         }
+    }
 
+    void SpawnProjectile()
+    {
+        GameObject bullet = Instantiate(projectileToUse, projectileSocket.transform.position, Quaternion.identity);
+        Projectile projectileComponent = bullet.GetComponent<Projectile>();
+        projectileComponent.damageCaused = damagePerShot;
+
+        // TODO: add arch aim via offset
+        Vector3 unitVectorToPlayer = (player.transform.position + aimOffset - projectileSocket.transform.position).normalized ;
+        bullet.GetComponent<Rigidbody>().velocity = unitVectorToPlayer * projectileComponent.projectileSpeed;
     }
         void OnDrawGizmos()
     {

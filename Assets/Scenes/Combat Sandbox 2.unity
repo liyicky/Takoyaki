@@ -5775,6 +5775,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1340234365, guid: 8ab995a93852c43a9a5707c8f8bbdd3d, type: 3}
+      propertyPath: fireInterval
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ab995a93852c43a9a5707c8f8bbdd3d, type: 3}
 --- !u!1001 &1631721607
@@ -6294,15 +6298,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Projectile
       objectReference: {fileID: 0}
-    - target: {fileID: 960554640968834383, guid: be13a71625309411696c9ef465c77dac,
-        type: 3}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
     - target: {fileID: 6845685482058608006, guid: be13a71625309411696c9ef465c77dac,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 347.24
+      value: 346.019
       objectReference: {fileID: 0}
     - target: {fileID: 6845685482058608006, guid: be13a71625309411696c9ef465c77dac,
         type: 3}
@@ -6312,7 +6311,7 @@ PrefabInstance:
     - target: {fileID: 6845685482058608006, guid: be13a71625309411696c9ef465c77dac,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 111.81
+      value: 119.374
       objectReference: {fileID: 0}
     - target: {fileID: 6845685482058608006, guid: be13a71625309411696c9ef465c77dac,
         type: 3}
@@ -7038,6 +7037,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4889274251239653071, guid: 0d9c2c6ada2234fabb233e8ebd2188c7,
+        type: 3}
+      propertyPath: m_Speed
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
 --- !u!4 &1876810601 stripped
@@ -7177,13 +7181,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1340234365, guid: 8ab995a93852c43a9a5707c8f8bbdd3d, type: 3}
-      propertyPath: aggroRadius
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1340234365, guid: 8ab995a93852c43a9a5707c8f8bbdd3d, type: 3}
-      propertyPath: attackRadius
-      value: 5
-      objectReference: {fileID: 0}
+      propertyPath: projectileToUse
+      value: 
+      objectReference: {fileID: 960554640968834383, guid: b82a3c498193b424589626e208e4fd08,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ab995a93852c43a9a5707c8f8bbdd3d, type: 3}
 --- !u!1001 &1976997629
