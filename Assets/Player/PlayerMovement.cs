@@ -1,61 +1,48 @@
 using System;
 using UnityEngine;
 using UnityStandardAssets.Characters.ThirdPerson;
+using UnityEngine.AI;
 
+[RequireComponent(typeof (NavMeshAgent))]
+[RequireComponent(typeof (AICharacterControl))]
 [RequireComponent(typeof (ThirdPersonCharacter))]
 [RequireComponent(typeof(CameraRaycaster))]
 
 public class PlayerMovement : MonoBehaviour
 {
 
-    [SerializeField] float walkMoveStopRadius = 0.2f;
-    [SerializeField] float attackMoveStopRadius = 5f;
     [SerializeField] const int walkableLayerNumber = 9;
     [SerializeField] const int enemyLayerNumber = 10;
 
     ThirdPersonCharacter thirdPersonCharacter;   // A reference to the ThirdPersonCharacter on the object
     CameraRaycaster cameraRaycaster;
-    Vector3 currentDestinationPoint, clickPoint;
     bool isInDirectMode = false;
+    AICharacterControl aiController = null;
+    GameObject walkTarget = null;
         
     private void Start()
     {
         cameraRaycaster = Camera.main.GetComponent<CameraRaycaster>();
         thirdPersonCharacter = GetComponent<ThirdPersonCharacter>();
-        currentDestinationPoint = transform.position;
+        aiController = GetComponent<AICharacterControl>();
         cameraRaycaster.notifyMouseClickObservers += ProcessMouseMovement;
+        walkTarget = new GameObject("walkTarget");
     }
 
     private void ProcessMouseMovement(RaycastHit raycastHit, int layerHit)
     {
-
-        clickPoint = raycastHit.transform.position;
         switch (layerHit)
         {
             case walkableLayerNumber:
-                currentDestinationPoint = ShortDestination(clickPoint, walkMoveStopRadius);
+                walkTarget.transform.position = raycastHit.point;
+                aiController.SetTarget(walkTarget.transform);
                 break;
             case enemyLayerNumber:
-                currentDestinationPoint = ShortDestination(clickPoint, attackMoveStopRadius);
+                aiController.SetTarget(raycastHit.collider.gameObject.transform);
                 break;
             default:
-                print("ERROR");
+                print("Don't know how to handle player movement here");
                 return;
-            }
-
-        WalkToDestination();
-    }
-
-    void WalkToDestination()
-    {
-        var playerToClickPoint = currentDestinationPoint - transform.position;
-        if (playerToClickPoint.magnitude >= walkMoveStopRadius)
-        {
-            thirdPersonCharacter.Move(playerToClickPoint, false, false);
-        }
-        else
-        {
-            thirdPersonCharacter.Move(Vector3.zero, false, false);
         }
     }
 
@@ -68,21 +55,14 @@ public class PlayerMovement : MonoBehaviour
         thirdPersonCharacter.Move(v*camForward + h*Camera.main.transform.right, false, false);
     }
 
-    Vector3 ShortDestination(Vector3 destination, float shortening)
-    {
-        Vector3 reductionVector = (destination - transform.position).normalized * shortening;
-        return destination - reductionVector;
-    }
+    // void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.black;
+    //     Gizmos.DrawLine(transform.position, walkTarget.transform.position);
+    //     Gizmos.DrawSphere(walkTarget.transform.position, 0.1f);
+    //     Gizmos.DrawSphere(walkTarget.transform.position, 0.2f);
 
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.black;
-        Gizmos.DrawLine(transform.position, currentDestinationPoint);
-        Gizmos.DrawSphere(currentDestinationPoint, 0.1f);
-        Gizmos.DrawSphere(clickPoint, 0.2f);
-
-        Gizmos.color = new Color(255f, 0f, 0, 0.5f);
-        Gizmos.DrawWireSphere(transform.position, attackMoveStopRadius);
-    }
+    //     Gizmos.color = new Color(255f, 0f, 0, 0.5f);
+    // }
 }
 

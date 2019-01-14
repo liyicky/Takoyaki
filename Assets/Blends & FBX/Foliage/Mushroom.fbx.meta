@@ -17,12 +17,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mushroom Base
-    second: {fileID: 2100000, guid: 17f4558b2bd351f499cecfd9fd884a58, type: 2}
+    second: {fileID: 2100000, guid: 1b4604c9c6b5c58419d0306121fa1bc1, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mushroom Top
-    second: {fileID: 2100000, guid: b407f9fe3e05aad45aaf276c6b35e161, type: 2}
+    second: {fileID: 2100000, guid: f0a1c2efd54655d48b8245c665468a8a, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

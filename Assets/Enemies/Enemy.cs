@@ -3,23 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.ThirdPerson;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDamageable
 {
 
     [SerializeField] float maxHealthPoints = 100f;
-    [SerializeField] float aggroRadius = 5f;
+    [SerializeField] float aggroRadius = 10f;
+    [SerializeField] float attackRadius = 5f;
+    [SerializeField] GameObject projectileToUse;
+
+    public float healthAsPercentage { get { return currentHealthPoint / maxHealthPoints; } }
 
     float currentHealthPoint = 100f;
     AICharacterControl aiController = null;
     GameObject player = null;
 
-    public float healthAsPercentage
+    public void TakeDamage(float damage)
     {
-        get
-        {
-            return currentHealthPoint / maxHealthPoints;
-        }
+        currentHealthPoint = Mathf.Clamp(currentHealthPoint - damage, 0f, maxHealthPoints);
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +35,12 @@ public class Enemy : MonoBehaviour
     {
         float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
 
+        if (distanceToPlayer <= attackRadius)
+        {
+            print(gameObject.name + "attacking player");
+            // TODO: spawn projectile
+        }
+
         if (distanceToPlayer <= aggroRadius)
         {
             aiController.SetTarget(player.transform);
@@ -42,29 +50,13 @@ public class Enemy : MonoBehaviour
             aiController.SetTarget(transform);
         }
 
-        // Collider[] hitColliders = Physics.OverlapSphere(transform.position, aggroRadius);
-        // foreach (var hit in hitColliders)
-        // {
-        //     if (hit.tag == "Player")
-        //     {
-        //         GetComponent<AICharacterControl>().SetTarget(hit.transform);
-        //         target = hit.transform;
-        //     }
-        // }
-
-        // if (target != null)
-        // {
-        //     var someting = target.position - transform.position;
-        //     if (someting.magnitude >= 0.1f)
-        //     {
-        //     //    this.Move(Vector3.zero, false, false);
-        //     }
-        // }
     }
-
         void OnDrawGizmos()
     {
         Gizmos.color = new Color(255f, 0f, 0, 0.5f);
         Gizmos.DrawWireSphere(transform.position, aggroRadius);
+
+        Gizmos.color = new Color(66f, 134f, 244f, 0.5f);
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
     }
 }
