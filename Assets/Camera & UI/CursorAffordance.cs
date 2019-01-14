@@ -30,11 +30,9 @@ public class CursorAffordance : MonoBehaviour
         switch (layer)
         {
             case walkableLayerNumber:
-                print("layer changed to walkable");
                 Cursor.SetCursor(walkCursor, cursorHotspot, CursorMode.Auto);
                 break;
             case enemyLayerNumber:
-                print("layer changed to enemy");
                 Cursor.SetCursor(targetCursor, cursorHotspot, CursorMode.Auto);
                 break;
             default:

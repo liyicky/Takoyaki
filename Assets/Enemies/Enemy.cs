@@ -19,9 +19,9 @@ public class Enemy : MonoBehaviour, IDamageable
 
     [SerializeField] Vector3 aimOffset = new Vector3(0f, 1f, 0f);
 
-    public float healthAsPercentage { get { return currentHealthPoint / maxHealthPoints; } }
+    public float healthAsPercentage { get { return currentHealthPoints / maxHealthPoints; } }
 
-    float currentHealthPoint = 100f;
+    float currentHealthPoints;
     AICharacterControl aiController = null;
     GameObject player = null;
 
@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
-        currentHealthPoint = Mathf.Clamp(currentHealthPoint - damage, 0f, maxHealthPoints);
+        currentHealthPoints = Mathf.Clamp(currentHealthPoints - damage, 0f, maxHealthPoints);
     }
 
     // Start is called before the first frame update
@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         aiController = GetComponent<AICharacterControl>();
         player = GameObject.FindGameObjectWithTag("Player");
+        currentHealthPoints = maxHealthPoints;
         
     }
 
@@ -65,6 +66,11 @@ public class Enemy : MonoBehaviour, IDamageable
         {
             // isAttacking = false;
             aiController.SetTarget(transform);
+        }
+
+        if (currentHealthPoints <= 0f)
+        {
+            Destroy(gameObject);
         }
     }
 

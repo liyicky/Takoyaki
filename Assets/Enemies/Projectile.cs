@@ -27,7 +27,6 @@ public class Projectile : MonoBehaviour
         if (damageableComponent)
         {
             (damageableComponent as IDamageable).TakeDamage(damageCaused);
-            print("Projectile hit: " + damageableComponent);
         }
     }
 }
