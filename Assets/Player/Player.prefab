@@ -169,7 +169,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c44a999b1ecd548c6914bf4a0a9b3f66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealthPoints: 100
+  enemyLayer: 10
+  maxHealthPoints: 1000
+  attackDamage: 50
+  attackRadius: 3
+  attackCooldown: 1
 --- !u!33 &4133447960215212875
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -269,18 +273,6 @@ PrefabInstance:
     - target: {fileID: 4893554851578796, guid: cc0dbe33ee8adbe4eb124e2d95d37fe4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -41.586975
-      objectReference: {fileID: 0}
-    - target: {fileID: 4893554851578796, guid: cc0dbe33ee8adbe4eb124e2d95d37fe4, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4893554851578796, guid: cc0dbe33ee8adbe4eb124e2d95d37fe4, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4893554851578796, guid: cc0dbe33ee8adbe4eb124e2d95d37fe4, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc0dbe33ee8adbe4eb124e2d95d37fe4, type: 3}

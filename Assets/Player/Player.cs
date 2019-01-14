@@ -48,7 +48,6 @@ public class Player : MonoBehaviour, IDamageable
             var enemy = hit.collider.gameObject;
             currentTarget = enemy;
             Attack();
-
         }
     }
 
