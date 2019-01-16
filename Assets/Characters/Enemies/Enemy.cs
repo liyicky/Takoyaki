@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour, IDamageable
     void Start()
     {
         aiController = GetComponent<AICharacterControl>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Camera").GetComponent<CameraFollow>().player;
         currentHealthPoints = maxHealthPoints;
         
     }

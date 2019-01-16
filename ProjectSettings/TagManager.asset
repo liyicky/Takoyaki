@@ -7,6 +7,7 @@ TagManager:
   - Fire
   - Walkable
   - Enemy
+  - Camera
   layers:
   - Default
   - TransparentFX
