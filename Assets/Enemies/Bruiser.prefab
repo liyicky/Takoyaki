@@ -1423,7 +1423,7 @@ MonoBehaviour:
   m_RunCycleLegOffset: 0.2
   m_MoveSpeedMultiplier: 0.25
   m_AnimSpeedMultiplier: 0.25
-  m_GroundCheckDistance: 0.3
+  m_GroundCheckDistance: 1
 --- !u!195 &1118271881
 NavMeshAgent:
   m_ObjectHideFlags: 0
