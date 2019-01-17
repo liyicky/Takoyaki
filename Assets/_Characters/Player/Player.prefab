@@ -175,6 +175,8 @@ MonoBehaviour:
   attackRadius: 3
   attackCooldown: 1
   weaponInUse: {fileID: 11400000, guid: bc65c7707efd94f6993e397b6e3a1226, type: 2}
+  animatorOverrideController: {fileID: 22100000, guid: 8a4b432a279014476b1e996594a42de7,
+    type: 2}
 --- !u!33 &4133447960215212875
 MeshFilter:
   m_ObjectHideFlags: 0

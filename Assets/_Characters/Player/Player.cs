@@ -5,6 +5,7 @@ using UnityEngine.Assertions;
 using RPG.CameraUI;
 using RPG.Weapon;
 using RPG.Core;
+using System;
 
 namespace RPG.Characters
 {
@@ -19,6 +20,7 @@ namespace RPG.Characters
     [SerializeField] float attackRadius = 1f;
     [SerializeField] float attackCooldown = 0.5f;
     [SerializeField] RPG.Weapon.Weapon weaponInUse;
+    [SerializeField] AnimatorOverrideController animatorOverrideController;
 
     public float healthAsPercentage { get { return currentHealthPoints / maxHealthPoints; } }
 
@@ -31,10 +33,24 @@ namespace RPG.Characters
     // Start is called before the first frame update
     void Start()
     {
-      currentHealthPoints = maxHealthPoints;
+      SetCurrentMaxHealth();
 
       SetupMouseClick();
       PutWeaponInHand();
+
+      OverrideAnimatorController();
+    }
+
+    private void SetCurrentMaxHealth()
+    {
+      currentHealthPoints = maxHealthPoints;
+    }
+
+    private void OverrideAnimatorController()
+    {
+      var animator = GetComponent<Animator>();
+      animator.runtimeAnimatorController = animatorOverrideController;
+      animatorOverrideController["DEFAULT ATTACK"] = weaponInUse.GetAttackAnimClip(); // TODO: remove const
     }
 
     void SetupMouseClick()
