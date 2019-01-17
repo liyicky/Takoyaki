@@ -16,9 +16,9 @@ public class PlayerMovement : MonoBehaviour
 
     ThirdPersonCharacter thirdPersonCharacter;   // A reference to the ThirdPersonCharacter on the object
     CameraRaycaster cameraRaycaster;
-    bool isInDirectMode = false;
     AICharacterControl aiController = null;
     GameObject walkTarget = null;
+    // bool isInDirectMode = false;
         
     private void Start()
     {

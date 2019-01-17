@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8369511057936993543}
   - component: {fileID: 6136927973066840225}
   - component: {fileID: 9209826776363700053}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Fast Projectile
   m_TagString: Player
   m_Icon: {fileID: 0}

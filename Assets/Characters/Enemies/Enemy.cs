@@ -36,6 +36,8 @@ public class Enemy : MonoBehaviour, IDamageable
     void Start()
     {
         aiController = GetComponent<AICharacterControl>();
+
+        // TODO: create singlton system to keep track of player and camera at all times
         player = GameObject.FindGameObjectWithTag("Camera").GetComponent<CameraFollow>().player;
         currentHealthPoints = maxHealthPoints;
         
@@ -49,13 +51,13 @@ public class Enemy : MonoBehaviour, IDamageable
         if (distanceToPlayer <= attackRadius && !isAttacking)
         {
             isAttacking = true;
-            InvokeRepeating("SpawnProjectile", 0f, fireInterval); //TODO: Switch to coroutines
+            InvokeRepeating("FireProjectile", 0f, fireInterval); //TODO: Switch to coroutines
         }
 
         if (distanceToPlayer > attackRadius)
         {
             isAttacking = false;
-            CancelInvoke("SpawnProjectile");
+            CancelInvoke("FireProjectile");
         }
 
         if (distanceToPlayer <= aggroRadius)
@@ -74,17 +76,20 @@ public class Enemy : MonoBehaviour, IDamageable
         }
     }
 
-    void SpawnProjectile()
+    // TODO: Refactor this method
+    void FireProjectile()
     {
         GameObject bullet = Instantiate(projectileToUse, projectileSocket.transform.position, Quaternion.identity);
         Projectile projectileComponent = bullet.GetComponent<Projectile>();
-        projectileComponent.damageCaused = damagePerShot;
+        projectileComponent.SetShooter(gameObject);
+        projectileComponent.SetDamage(damagePerShot);
 
         // TODO: add arch aim via offset
         Vector3 unitVectorToPlayer = (player.transform.position + aimOffset - projectileSocket.transform.position).normalized ;
-        bullet.GetComponent<Rigidbody>().velocity = unitVectorToPlayer * projectileComponent.projectileSpeed;
+        bullet.GetComponent<Rigidbody>().velocity = unitVectorToPlayer * projectileComponent.GetDefaultLaunchSpeed();
     }
-        void OnDrawGizmos()
+
+    void OnDrawGizmos()
     {
         Gizmos.color = new Color(255f, 0f, 0, 0.5f);
         Gizmos.DrawWireSphere(transform.position, aggroRadius);

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 [RequireComponent(typeof(CameraRaycaster))]
 
@@ -13,7 +14,6 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] float attackRadius = 1f;
     [SerializeField] float attackCooldown = 0.5f;
     [SerializeField] Weapon weaponInUse;
-    [SerializeField] GameObject weaponSocket;
 
     public float healthAsPercentage { get { return currentHealthPoints / maxHealthPoints; } }
 
@@ -28,6 +28,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         currentHealthPoints = maxHealthPoints;
 
+        SetupMouseClick();
         PutWeaponInHand();
     }
 
@@ -40,9 +41,19 @@ public class Player : MonoBehaviour, IDamageable
     void PutWeaponInHand()
     {
         var weaponPrefab = weaponInUse.GetWeaponPrefab();
-        GameObject weapon = Instantiate(weaponPrefab, weaponSocket.transform) as GameObject;
+        GameObject dominantHand = RequestDominantHand();
+        GameObject weapon = Instantiate(weaponPrefab, dominantHand.transform) as GameObject;
         weapon.transform.localPosition = weaponInUse.girpTransform.localPosition;
         weapon.transform.localRotation = weaponInUse.girpTransform.localRotation;
+    }
+
+    GameObject RequestDominantHand()
+    {
+        var dominantHands = GetComponentsInChildren<DominantHand>();
+        int numberOfDominantHands = dominantHands.Length;
+        Assert.AreNotEqual(numberOfDominantHands, 0, "No Dominant Hand");
+        Assert.IsFalse(numberOfDominantHands > 1,   "Multiple domainant hand scripts on player");
+        return dominantHands[0].gameObject;
     }
 
     // Update is called once per frame
@@ -57,8 +68,9 @@ public class Player : MonoBehaviour, IDamageable
         currentHealthPoints = Mathf.Clamp(currentHealthPoints - damage, 0f, maxHealthPoints);
     }
 
-    void OnTargetClicked(RaycastHit hit, int layerHit)
+    private void OnTargetClicked(RaycastHit hit, int layerHit) 
     {
+        print("ontargetclicked");
         if (layerHit == enemyLayer)
         {
             var enemy = hit.collider.gameObject;
@@ -69,9 +81,11 @@ public class Player : MonoBehaviour, IDamageable
 
     void Attack()
     {            
+        print("attack");
         var targetDistance = Vector3.Distance(currentTarget.transform.position, transform.position);
         if (targetDistance > attackRadius)
         {
+            print("too far to attack");
             return;
         }
 
@@ -80,6 +94,7 @@ public class Player : MonoBehaviour, IDamageable
             print("attacked");
             (currentTarget.GetComponent(typeof(IDamageable)) as IDamageable).TakeDamage(attackDamage);
             lastHitTime = Time.time;
+            // Anima
         }
     }
 }

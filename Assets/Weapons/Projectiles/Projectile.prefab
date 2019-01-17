@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8369511057936993543}
   - component: {fileID: 6136927973066840225}
   - component: {fileID: 9209826776363700053}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6fd099d339b4ae34692c8258e4f87531, type: 2}
+  - {fileID: 2100000, guid: e4ae2252b9bdd43c2ac76f1ab5bd8637, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MovePower: 5
-  m_UseTorque: 1
+  m_UseTorque: 0
   m_MaxAngularVelocity: 25
   m_JumpPower: 4
 --- !u!114 &6136927973066840225
@@ -164,7 +164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1713933059200573806}
   - component: {fileID: 5503811013063721801}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

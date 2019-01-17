@@ -7,13 +7,31 @@ public class Projectile : MonoBehaviour
 {
 
     // Note: Other classes can set
-    public float projectileSpeed;
-    public float damageCaused;
+    [SerializeField] float projectileSpeed;
+    [SerializeField] GameObject shooter; // For inspecting while paused
+
+    const float DESTROY_DELAY = 60f;
+    float damageCaused;
 
     // Start is called before the first frame update
     void Start()
     {
         
+    }
+
+    public void SetShooter(GameObject shootingGameObject)
+    {
+        shooter = shootingGameObject;
+    }
+
+    public float GetDefaultLaunchSpeed()
+    {
+        return projectileSpeed;
+    }
+
+    public void SetDamage(float damage)
+    {
+        damageCaused = damage;
     }
 
     // Update is called once per frame
@@ -22,12 +40,18 @@ public class Projectile : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision other) {
+    private void OnCollisionEnter(Collision other)
+    {
+        DamageIfDamageables(other);
+    }
+
+    private void DamageIfDamageables(Collision other)
+    {
         Component damageableComponent = other.gameObject.GetComponent(typeof(IDamageable));
-        if (damageableComponent)
+        if (damageableComponent && shooter.layer != other.gameObject.layer)
         {
             (damageableComponent as IDamageable).TakeDamage(damageCaused);
-            Destroy(gameObject, 60f);
         }
+        Destroy(gameObject, DESTROY_DELAY);
     }
 }

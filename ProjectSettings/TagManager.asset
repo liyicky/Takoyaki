@@ -8,6 +8,7 @@ TagManager:
   - Walkable
   - Enemy
   - Camera
+  - Collide
   layers:
   - Default
   - TransparentFX
@@ -21,8 +22,8 @@ TagManager:
   - Walkable
   - Enemy
   - Stiff
-  - 
-  - 
+  - Player
+  - NPC
   - 
   - 
   - 

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8369511057936993543}
   - component: {fileID: 6136927973066840225}
   - component: {fileID: 9209826776363700053}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Boss Projectile
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6fd099d339b4ae34692c8258e4f87531, type: 2}
+  - {fileID: 2100000, guid: e4ae2252b9bdd43c2ac76f1ab5bd8637, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
