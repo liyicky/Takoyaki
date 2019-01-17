@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
+namespace RPG.CameraUI
 {
+  public class CameraFollow : MonoBehaviour
+  {
     // TODO: create singlton system to keep track of player and camera at all times
     [SerializeField] public GameObject player;
 
@@ -21,6 +23,7 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
-        transform.position = player.transform.position;
+      transform.position = player.transform.position;
     }
+  }
 }

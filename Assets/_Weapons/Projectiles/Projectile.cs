@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RPG.Core;
 
-
-public class Projectile : MonoBehaviour
+namespace RPG.Weapon
 {
-
+  public class Projectile : MonoBehaviour
+  {
     // Note: Other classes can set
     [SerializeField] float projectileSpeed;
     [SerializeField] GameObject shooter; // For inspecting while paused
@@ -21,17 +22,17 @@ public class Projectile : MonoBehaviour
 
     public void SetShooter(GameObject shootingGameObject)
     {
-        shooter = shootingGameObject;
+      shooter = shootingGameObject;
     }
 
     public float GetDefaultLaunchSpeed()
     {
-        return projectileSpeed;
+      return projectileSpeed;
     }
 
     public void SetDamage(float damage)
     {
-        damageCaused = damage;
+      damageCaused = damage;
     }
 
     // Update is called once per frame
@@ -42,16 +43,17 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        DamageIfDamageables(other);
+      DamageIfDamageables(other);
     }
 
     private void DamageIfDamageables(Collision other)
     {
-        Component damageableComponent = other.gameObject.GetComponent(typeof(IDamageable));
-        if (damageableComponent && shooter.layer != other.gameObject.layer)
-        {
-            (damageableComponent as IDamageable).TakeDamage(damageCaused);
-        }
-        Destroy(gameObject, DESTROY_DELAY);
+      Component damageableComponent = other.gameObject.GetComponent(typeof(IDamageable));
+      if (damageableComponent && shooter.layer != other.gameObject.layer)
+      {
+        (damageableComponent as IDamageable).TakeDamage(damageCaused);
+      }
+      Destroy(gameObject, DESTROY_DELAY);
     }
+  }
 }
