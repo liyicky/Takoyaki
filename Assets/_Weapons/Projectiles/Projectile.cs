@@ -49,7 +49,7 @@ namespace RPG.Weapon
     private void DamageIfDamageables(Collision other)
     {
       Component damageableComponent = other.gameObject.GetComponent(typeof(IDamageable));
-      if (damageableComponent && shooter.layer != other.gameObject.layer)
+      if (shooter && damageableComponent && shooter.layer != other.gameObject.layer)
       {
         (damageableComponent as IDamageable).TakeDamage(damageCaused);
       }

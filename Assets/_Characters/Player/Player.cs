@@ -75,7 +75,6 @@ namespace RPG.Characters
 
     private void OnTargetClicked(RaycastHit hit, int layerHit) 
     {
-      print("ontargetclicked");
       if (layerHit == enemyLayer)
       {
         var enemy = hit.collider.gameObject;
