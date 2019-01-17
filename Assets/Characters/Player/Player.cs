@@ -12,6 +12,8 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] float attackDamage = 10f;
     [SerializeField] float attackRadius = 1f;
     [SerializeField] float attackCooldown = 0.5f;
+    [SerializeField] Weapon weaponInUse;
+    [SerializeField] GameObject weaponSocket;
 
     public float healthAsPercentage { get { return currentHealthPoints / maxHealthPoints; } }
 
@@ -24,9 +26,23 @@ public class Player : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
+        currentHealthPoints = maxHealthPoints;
+
+        PutWeaponInHand();
+    }
+
+    void SetupMouseClick()
+    {
         cameraRaycaster = Camera.main.GetComponent<CameraRaycaster>();
         cameraRaycaster.notifyMouseClickObservers += OnTargetClicked;
-        currentHealthPoints = maxHealthPoints;
+    }
+
+    void PutWeaponInHand()
+    {
+        var weaponPrefab = weaponInUse.GetWeaponPrefab();
+        GameObject weapon = Instantiate(weaponPrefab, weaponSocket.transform) as GameObject;
+        weapon.transform.localPosition = weaponInUse.girpTransform.localPosition;
+        weapon.transform.localRotation = weaponInUse.girpTransform.localRotation;
     }
 
     // Update is called once per frame
