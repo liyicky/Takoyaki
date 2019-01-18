@@ -154,7 +154,7 @@ Terrain:
   m_TreeDistance: 500
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
-  m_TreeMaximumFullLODCount: 50
+  m_TreeMaximumFullLODCount: 0
   m_DetailObjectDistance: 250
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
@@ -2100,6 +2100,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ab995a93852c43a9a5707c8f8bbdd3d, type: 3}
+--- !u!1 &1175999598 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 602554835, guid: 0d874de35be7a4679a454bc55e6e10f1,
+    type: 3}
+  m_PrefabInstance: {fileID: 468501175}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1175999606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175999598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab598bb7f53b4c5587ce7fad621c03c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 59d6a7feb0b59bd4c9678fdd1562df3f, type: 3}
+  layerFilter: 12
+  triggerRadius: 5
+  isOneTimeOnly: 1
+  hasPlayed: 0
 --- !u!1 &1180846501
 GameObject:
   m_ObjectHideFlags: 0
@@ -2383,6 +2406,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2128a1a7ef04b4b6986dfadbbe313111, type: 3}
+--- !u!1 &1340225455 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1478030337, guid: 0d874de35be7a4679a454bc55e6e10f1,
+    type: 3}
+  m_PrefabInstance: {fileID: 468501175}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1340225458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1340225455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab598bb7f53b4c5587ce7fad621c03c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 0}
+  layerFilter: 0
+  triggerRadius: 5
+  isOneTimeOnly: 1
+  hasPlayed: 0
 --- !u!1001 &1341116756
 PrefabInstance:
   m_ObjectHideFlags: 0
