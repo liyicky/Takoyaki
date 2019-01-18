@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59e3168caf8b84868b267b9d456369e1, type: 3}
+  m_Name: Hellbrian's Sword
+  m_EditorClassIdentifier: 
+  weaponPrefab: {fileID: 1866560071247570, guid: a96277e2e8acb9d4b83adf17a87141bf,
+    type: 3}
+  attackAnimation: {fileID: 7400000, guid: f94c62a8b96f5a7469ce0da8ccac09b3, type: 3}
+  girpTransform: {fileID: 3599785500798020040, guid: 96faaf2e5fc9249b7aebd606b634d45b,
+    type: 3}
