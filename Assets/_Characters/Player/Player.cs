@@ -17,8 +17,6 @@ namespace RPG.Characters
     [SerializeField] int enemyLayer = 10;
     [SerializeField] float maxHealthPoints = 100f;
     [SerializeField] float attackDamage = 10f;
-    [SerializeField] float attackRadius = 1f;
-    [SerializeField] float attackCooldown = 0.5f;
     [SerializeField] RPG.Weapon.Weapon weaponInUse;
     [SerializeField] AnimatorOverrideController animatorOverrideController;
 
@@ -71,7 +69,7 @@ namespace RPG.Characters
       var dominantHands = GetComponentsInChildren<DominantHand>();
       int numberOfDominantHands = dominantHands.Length;
       Assert.AreNotEqual(numberOfDominantHands, 0, "No Dominant Hand");
-      Assert.IsFalse(numberOfDominantHands > 1,   "Multiple domainant hand scripts on player");
+      Assert.IsFalse(numberOfDominantHands > 1, "Multiple domainant hand scripts on player");
       return dominantHands[0].gameObject;
     }
 
@@ -91,29 +89,27 @@ namespace RPG.Characters
     {
       if (layerHit == enemyLayer)
       {
-        var enemy = hit.collider.gameObject;
-        currentTarget = enemy;
+        currentTarget = hit.collider.gameObject;
         Attack();
       }
     }
 
     void Attack()
     {            
-      print("attack");
       var targetDistance = Vector3.Distance(currentTarget.transform.position, transform.position);
-      if (targetDistance > attackRadius)
+      if (targetDistance > weaponInUse.AttackRadius()) return;
+      if (Time.time - lastHitTime > weaponInUse.AttackCooldown())
       {
-        print("too far to attack");
-        return;
-      }
-
-      if (Time.time - lastHitTime > attackCooldown)
-      {
-        print("attacked");
         (currentTarget.GetComponent(typeof(IDamageable)) as IDamageable).TakeDamage(attackDamage);
         lastHitTime = Time.time;
-        // Anima
+        AttackAnimation();
       }
+    }
+
+    void AttackAnimation()
+    {
+      var animator = GetComponent<Animator>();
+      animator.SetTrigger("Attack");
     }
   }
 }

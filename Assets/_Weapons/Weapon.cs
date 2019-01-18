@@ -10,6 +10,8 @@ namespace RPG.Weapon
   {
     [SerializeField] GameObject weaponPrefab;
     [SerializeField] AnimationClip attackAnimation;
+    [SerializeField] float attackRadius = 1f;
+    [SerializeField] float attackCooldown = 0.5f;
 
     public Transform girpTransform;
 
@@ -22,6 +24,16 @@ namespace RPG.Weapon
     {
       // RemoveAnimationEvents();
       return attackAnimation;
+    }
+
+    public float AttackRadius()
+    {
+      return attackRadius;
+    }
+
+    public float AttackCooldown()
+    {
+      return attackCooldown;
     }
 
     // Stops bad stuff from happening when there are events
