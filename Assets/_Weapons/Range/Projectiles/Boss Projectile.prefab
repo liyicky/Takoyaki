@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 6615565149281612068}
   - component: {fileID: 7444541298928827108}
   - component: {fileID: 8369511057936993543}
-  - component: {fileID: 6136927973066840225}
   - component: {fileID: 9209826776363700053}
   m_Layer: 0
   m_Name: Boss Projectile
@@ -128,18 +127,6 @@ MonoBehaviour:
   m_UseTorque: 1
   m_MaxAngularVelocity: 50
   m_JumpPower: 5
---- !u!114 &6136927973066840225
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 960554640968834383}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daa7e0829bc72c94babd728cc0466196, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &9209826776363700053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,7 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileSpeed: 50
-  damageCaused: 1000
+  shooter: {fileID: 0}
 --- !u!1 &2612698879608813249
 GameObject:
   m_ObjectHideFlags: 0

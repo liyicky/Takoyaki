@@ -34,10 +34,8 @@ namespace RPG.Characters
     void Start()
     {
       SetCurrentMaxHealth();
-
       SetupMouseClick();
       PutWeaponInHand();
-
       OverrideAnimatorController();
     }
 
