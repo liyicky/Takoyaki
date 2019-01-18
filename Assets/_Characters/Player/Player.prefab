@@ -172,8 +172,6 @@ MonoBehaviour:
   enemyLayer: 10
   maxHealthPoints: 1000
   attackDamage: 50
-  attackRadius: 3
-  attackCooldown: 1
   weaponInUse: {fileID: 11400000, guid: bc65c7707efd94f6993e397b6e3a1226, type: 2}
   animatorOverrideController: {fileID: 22100000, guid: 8a4b432a279014476b1e996594a42de7,
     type: 2}
@@ -222,13 +220,13 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &4632289753739506638
+--- !u!114 &1784492331385336007
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1510858971196225016}
+  m_GameObject: {fileID: 1510858971196225014}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b17c5300033b64d1bba88f554007470e, type: 3}
@@ -401,9 +399,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1510858971196257118}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1510858971196225016 stripped
+--- !u!1 &1510858971196225014 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 100006, guid: 8d0a57b326030fc44ad6eeab6f398c6a,
+  m_CorrespondingSourceObject: {fileID: 100008, guid: 8d0a57b326030fc44ad6eeab6f398c6a,
     type: 3}
   m_PrefabInstance: {fileID: 1510858971196257118}
   m_PrefabAsset: {fileID: 0}

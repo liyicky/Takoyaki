@@ -892,6 +892,7 @@ GameObject:
   - component: {fileID: 602554838}
   - component: {fileID: 602554837}
   - component: {fileID: 602554836}
+  - component: {fileID: 3185952030167026149}
   m_Layer: 10
   m_Name: Minion
   m_TagString: Untagged
@@ -1043,6 +1044,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+--- !u!114 &3185952030167026149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602554835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab598bb7f53b4c5587ce7fad621c03c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 231f34103ce3245b2b6be785b2cb93b6, type: 3}
+  layerFilter: 12
+  triggerRadius: 1.5
+  isOneTimeOnly: 0
+  hasPlayed: 0
 --- !u!1 &622512928
 GameObject:
   m_ObjectHideFlags: 0
