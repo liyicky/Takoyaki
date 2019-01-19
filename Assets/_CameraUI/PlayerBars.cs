@@ -6,24 +6,35 @@ using UnityEngine.UI;
 namespace RPG.Characters
 {
   [RequireComponent(typeof(CanvasRenderer))]
-  public class PlayerHealthBar : MonoBehaviour
+  public class PlayerBars : MonoBehaviour
   {
-    CanvasRenderer healthPoolHolder;
+    [SerializeField] CanvasRenderer healthPoolHolder;
+    [SerializeField] CanvasRenderer manaPoolHolder;
     Player player;
 
     // Use this for initialization
     void Start()
     {
       player = FindObjectOfType<Player>();
-      healthPoolHolder = GetComponent<CanvasRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-      // float xValue = -(player.healthAsPercentage / 2f) - 0.5f;
+      UpdateHealthPool();
+      UpdateManaPool();
+    }
+    
+    void UpdateHealthPool()
+    {
       float yValue = (185f * player.healthAsPercentage) - 185f;
       healthPoolHolder.transform.localPosition = new Vector3(0, yValue, 0);
+    }
+
+    void UpdateManaPool()
+    {
+      float yValue = (185f * player.manaAsPercentage) - 185f;
+      manaPoolHolder.transform.localPosition = new Vector3(0, yValue, 0);
     }
   }
 }

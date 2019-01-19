@@ -16,30 +16,36 @@ namespace RPG.Characters
 
     [SerializeField] int enemyLayer = 10;
     [SerializeField] float maxHealthPoints = 100f;
+    [SerializeField] float maxManaPoints = 100f;
+    [SerializeField] float manaRegenRate = 1f;
     [SerializeField] float attackDamage = 10f;
     [SerializeField] RPG.Weapon.Weapon weaponInUse;
     [SerializeField] AnimatorOverrideController animatorOverrideController;
 
+
     public float healthAsPercentage { get { return currentHealthPoints / maxHealthPoints; } }
+    public float manaAsPercentage { get { return currentManaPoints / maxManaPoints; } }
 
     CameraRaycaster cameraRaycaster;
     GameObject currentTarget;
     float currentHealthPoints;
+    [SerializeField] float currentManaPoints;
     float lastHitTime = 1f;
 
 
     // Start is called before the first frame update
     void Start()
     {
-      SetCurrentMaxHealth();
+      SetCurrentPoints();
       SetupMouseClick();
       PutWeaponInHand();
       OverrideAnimatorController();
     }
 
-    private void SetCurrentMaxHealth()
+    private void SetCurrentPoints()
     {
       currentHealthPoints = maxHealthPoints;
+      currentManaPoints = maxManaPoints;
     }
 
     private void OverrideAnimatorController()
@@ -53,6 +59,7 @@ namespace RPG.Characters
     {
       cameraRaycaster = Camera.main.GetComponent<CameraRaycaster>();
       cameraRaycaster.notifyMouseClickObservers += OnTargetClicked;
+      cameraRaycaster.notifyMouseRightClickObservers += OnTargetRightClicked;
     }
 
     void PutWeaponInHand()
@@ -76,7 +83,7 @@ namespace RPG.Characters
     // Update is called once per frame
     void Update()
     {
-        
+      RegenMana();
     }
 
     public void TakeDamage(float damage)
@@ -92,6 +99,17 @@ namespace RPG.Characters
         currentTarget = hit.collider.gameObject;
         Attack();
       }
+    }
+
+    private void OnTargetRightClicked(RaycastHit hit, int layerHit)
+    {
+      currentManaPoints -= 10;
+    }
+
+    void RegenMana()
+    {
+      float calculatedManaRegen = (0.01f * manaRegenRate) * currentManaPoints;
+      currentManaPoints = Mathf.Clamp(calculatedManaRegen + currentManaPoints, 0f, maxManaPoints);
     }
 
     void Attack()
