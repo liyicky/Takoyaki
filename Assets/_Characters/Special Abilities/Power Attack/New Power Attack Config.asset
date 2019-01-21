@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: New Power Attack Config
   m_EditorClassIdentifier: 
   energyCost: 10
+  damDam: 10

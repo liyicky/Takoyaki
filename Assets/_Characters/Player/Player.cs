@@ -20,6 +20,8 @@ namespace RPG.Characters
     [SerializeField] RPG.Weapon.Weapon weaponInUse;
     [SerializeField] AnimatorOverrideController animatorOverrideController;
 
+    [SerializeField] SpecialAbilityConfig ability1;
+
     public float healthAsPercentage { get { return currentHealthPoints / maxHealthPoints; } }
     public float manaAsPercentage { get { return currentManaPoints / maxManaPoints; } }
 
@@ -42,6 +44,7 @@ namespace RPG.Characters
       SetupMouseClick();
       PutWeaponInHand();
       OverrideAnimatorController();
+      ability1.AddComponent(gameObject);
     }
 
     private void SetCurrentPoints()
@@ -65,11 +68,14 @@ namespace RPG.Characters
 
     private void ProcessEnemyInteraction(Enemy enemy)
     {
-      if (Input.GetMouseButtonDown(1))
+      currentTarget = enemy.gameObject;
+      if (Input.GetMouseButtonDown(0))
       {
-        currentManaPoints -= 10;
-        currentTarget = enemy.gameObject;
         Attack();
+      }
+      else if (Input.GetMouseButtonDown(1))
+      {
+        AttemptSpecialAbility1();
       }
     }
 
@@ -113,6 +119,12 @@ namespace RPG.Characters
         lastHitTime = Time.time;
         AttackAnimation();
       }
+    }
+    
+    private void AttemptSpecialAbility1()
+    {
+      GetComponent<PowerAttackBehaviour>().Use();
+      currentManaPoints -= 10f;      
     }
 
     private void AttackAnimation()

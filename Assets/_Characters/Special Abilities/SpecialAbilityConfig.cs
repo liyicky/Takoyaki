@@ -7,7 +7,7 @@ namespace RPG.Characters
     public abstract class SpecialAbilityConfig : ScriptableObject
     {
         [Header("Speical Ability General")]
-        [SerializeField] float energyCost = 0f;
+        [SerializeField] float manaCost = 0f;
 
         abstract public ISpecialAbility AddComponent(GameObject gameObjectToAttachTo);
     }
