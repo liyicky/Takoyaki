@@ -24,7 +24,7 @@ namespace RPG.Characters
 
     float currentHealthPoints;
     AICharacterControl aiController = null;
-    GameObject player = null;
+    Player player = null;
     bool isAttacking = false;
 
     public void TakeDamage(float damage)
@@ -38,13 +38,18 @@ namespace RPG.Characters
       aiController = GetComponent<AICharacterControl>();
 
       // TODO: create singlton system to keep track of player and camera at all times
-      player = GameObject.FindGameObjectWithTag("Camera").GetComponent<CameraFollow>().player;
+      player = FindObjectOfType<Player>();
       currentHealthPoints = maxHealthPoints;
     }
 
     // Update is called once per frame
     void Update()
     {
+      if (player.healthAsPercentage <= Mathf.Epsilon)
+      { 
+        StopAllCoroutines();
+        Destroy(this);
+      }
       float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
 
       if (distanceToPlayer <= attackRadius && !isAttacking)
