@@ -6,16 +6,22 @@ namespace RPG.Characters
 {    
     public class PowerAttackBehaviour : MonoBehaviour, ISpecialAbility
     {
-        PowerAttackConfig config;
+        PowerAttack powerAttack;
 
-        public void SetConfig(PowerAttackConfig configToSet)
+        public float ManaCost()
         {
-            this.config = configToSet;
+            return ManaCost();
         }
 
-        public void Use()
+        public void SetConfig(PowerAttack powerAttackToSet)
         {
-            throw new System.NotImplementedException();
+            this.powerAttack = powerAttackToSet;
+        }
+
+        public void Use(AbilityUseParams useParams)
+        {
+            float adjDamage = useParams.baseDamage + powerAttack.Damage();
+            useParams.target.TakeDamage(adjDamage);
         }
 
         // Start is called before the first frame update

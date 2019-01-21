@@ -16,11 +16,11 @@ namespace RPG.Characters
     [SerializeField] float maxHealthPoints = 100f;
     [SerializeField] float maxManaPoints = 100f;
     [SerializeField] float manaRegenRate = 1f;
-    [SerializeField] float attackDamage = 10f;
+    [SerializeField] float baseDamage = 10f;
     [SerializeField] RPG.Weapon.Weapon weaponInUse;
     [SerializeField] AnimatorOverrideController animatorOverrideController;
 
-    [SerializeField] SpecialAbilityConfig ability1;
+    [SerializeField] SpecialAbility[] abilities;
 
     public float healthAsPercentage { get { return currentHealthPoints / maxHealthPoints; } }
     public float manaAsPercentage { get { return currentManaPoints / maxManaPoints; } }
@@ -44,7 +44,7 @@ namespace RPG.Characters
       SetupMouseClick();
       PutWeaponInHand();
       OverrideAnimatorController();
-      ability1.AddComponent(gameObject);
+      abilities[0].AttachComponentTo(gameObject);
     }
 
     private void SetCurrentPoints()
@@ -75,7 +75,7 @@ namespace RPG.Characters
       }
       else if (Input.GetMouseButtonDown(1))
       {
-        AttemptSpecialAbility1();
+        AttemptSpecialAbility();
       }
     }
 
@@ -115,22 +115,33 @@ namespace RPG.Characters
       if (targetDistance > weaponInUse.AttackRadius()) return;
       if (Time.time - lastHitTime > weaponInUse.AttackCooldown())
       {
-        (currentTarget.GetComponent(typeof(IDamageable)) as IDamageable).TakeDamage(attackDamage);
+        (currentTarget.GetComponent(typeof(IDamageable)) as IDamageable).TakeDamage(baseDamage);
         lastHitTime = Time.time;
         AttackAnimation();
       }
     }
     
-    private void AttemptSpecialAbility1()
-    {
-      GetComponent<PowerAttackBehaviour>().Use();
-      currentManaPoints -= 10f;      
+    private void AttemptSpecialAbility()
+    {  
+      float manaCost = abilities[0].ManaCost();
+      if (ManaAvailable(manaCost))
+      {
+        var tar = currentTarget.GetComponent(typeof(IDamageable)) as IDamageable;
+        var abilityParams = new AbilityUseParams(tar, baseDamage, currentTarget.transform.position);
+        abilities[0].Use(abilityParams);
+        currentManaPoints -= manaCost;      
+      }
     }
 
     private void AttackAnimation()
     {
       var animator = GetComponent<Animator>();
       animator.SetTrigger("Attack");
+    }
+
+    private bool ManaAvailable(float manaCost)
+    {
+      return currentManaPoints >= manaCost;
     }
   }
 }
