@@ -13,8 +13,6 @@ namespace RPG.Characters
 
   public class Player : MonoBehaviour, IDamageable
   {
-
-    [SerializeField] int enemyLayer = 10;
     [SerializeField] float maxHealthPoints = 100f;
     [SerializeField] float maxManaPoints = 100f;
     [SerializeField] float manaRegenRate = 1f;
@@ -22,19 +20,23 @@ namespace RPG.Characters
     [SerializeField] RPG.Weapon.Weapon weaponInUse;
     [SerializeField] AnimatorOverrideController animatorOverrideController;
 
-
     public float healthAsPercentage { get { return currentHealthPoints / maxHealthPoints; } }
     public float manaAsPercentage { get { return currentManaPoints / maxManaPoints; } }
 
     CameraRaycaster cameraRaycaster;
     GameObject currentTarget;
     float currentHealthPoints;
-    [SerializeField] float currentManaPoints;
+    float currentManaPoints;
     float lastHitTime = 1f;
 
+    public void TakeDamage(float damage)
+    {
+      // Mathf.Clamp - Only allows values between two floats (i.e. 0 and maxHealth)
+      currentHealthPoints = Mathf.Clamp(currentHealthPoints - damage, 0f, maxHealthPoints);
+    }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
       SetCurrentPoints();
       SetupMouseClick();
@@ -55,14 +57,23 @@ namespace RPG.Characters
       animatorOverrideController["DEFAULT ATTACK"] = weaponInUse.GetAttackAnimClip(); // TODO: remove const
     }
 
-    void SetupMouseClick()
+    private void SetupMouseClick()
     {
       cameraRaycaster = Camera.main.GetComponent<CameraRaycaster>();
-      cameraRaycaster.notifyMouseClickObservers += OnTargetClicked;
-      cameraRaycaster.notifyMouseRightClickObservers += OnTargetRightClicked;
+      cameraRaycaster.onMouseOverEnemy += ProcessEnemyInteraction;
     }
 
-    void PutWeaponInHand()
+    private void ProcessEnemyInteraction(Enemy enemy)
+    {
+      if (Input.GetMouseButtonDown(1))
+      {
+        currentManaPoints -= 10;
+        currentTarget = enemy.gameObject;
+        Attack();
+      }
+    }
+
+    private void PutWeaponInHand()
     {
       var weaponPrefab = weaponInUse.GetWeaponPrefab();
       GameObject dominantHand = RequestDominantHand();
@@ -71,7 +82,7 @@ namespace RPG.Characters
       weapon.transform.localRotation = weaponInUse.girpTransform.localRotation;
     }
 
-    GameObject RequestDominantHand()
+    private GameObject RequestDominantHand()
     {
       var dominantHands = GetComponentsInChildren<DominantHand>();
       int numberOfDominantHands = dominantHands.Length;
@@ -81,38 +92,18 @@ namespace RPG.Characters
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
       RegenMana();
     }
-
-    public void TakeDamage(float damage)
-    {
-      // Mathf.Clamp - Only allows values between two floats (i.e. 0 and maxHealth)
-      currentHealthPoints = Mathf.Clamp(currentHealthPoints - damage, 0f, maxHealthPoints);
-    }
-
-    private void OnTargetClicked(RaycastHit hit, int layerHit) 
-    {
-      if (layerHit == enemyLayer)
-      {
-        currentTarget = hit.collider.gameObject;
-        Attack();
-      }
-    }
-
-    private void OnTargetRightClicked(RaycastHit hit, int layerHit)
-    {
-      currentManaPoints -= 10;
-    }
-
-    void RegenMana()
+    
+    private void RegenMana()
     {
       float calculatedManaRegen = (0.01f * manaRegenRate) * currentManaPoints;
       currentManaPoints = Mathf.Clamp(calculatedManaRegen + currentManaPoints, 0f, maxManaPoints);
     }
 
-    void Attack()
+    private void Attack()
     {            
       var targetDistance = Vector3.Distance(currentTarget.transform.position, transform.position);
       if (targetDistance > weaponInUse.AttackRadius()) return;
@@ -124,7 +115,7 @@ namespace RPG.Characters
       }
     }
 
-    void AttackAnimation()
+    private void AttackAnimation()
     {
       var animator = GetComponent<Animator>();
       animator.SetTrigger("Attack");

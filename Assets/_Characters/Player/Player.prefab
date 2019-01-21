@@ -17,8 +17,8 @@ GameObject:
   - component: {fileID: 6161779991567099831}
   - component: {fileID: 1417412762}
   - component: {fileID: 418260168}
-  - component: {fileID: 4133447960215212875}
   - component: {fileID: 227254689783392905}
+  - component: {fileID: 1165301268}
   m_Layer: 12
   m_Name: Player
   m_TagString: Player
@@ -171,18 +171,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyLayer: 10
   maxHealthPoints: 1000
+  maxManaPoints: 100
+  manaRegenRate: 0.05
   attackDamage: 50
   weaponInUse: {fileID: 11400000, guid: bc65c7707efd94f6993e397b6e3a1226, type: 2}
   animatorOverrideController: {fileID: 22100000, guid: 8a4b432a279014476b1e996594a42de7,
     type: 2}
---- !u!33 &4133447960215212875
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1417412755}
-  m_Mesh: {fileID: 4300000, guid: 8d0a57b326030fc44ad6eeab6f398c6a, type: 3}
 --- !u!23 &227254689783392905
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -220,6 +214,14 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!33 &1165301268
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417412755}
+  m_Mesh: {fileID: 4300000, guid: df66970bb136a93488cc9847e44efd27, type: 3}
 --- !u!114 &1784492331385336007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,10 +248,6 @@ PrefabInstance:
     - target: {fileID: 100012, guid: 8d0a57b326030fc44ad6eeab6f398c6a, type: 3}
       propertyPath: m_Layer
       value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 100012, guid: 8d0a57b326030fc44ad6eeab6f398c6a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 8d0a57b326030fc44ad6eeab6f398c6a, type: 3}
       propertyPath: m_Layer

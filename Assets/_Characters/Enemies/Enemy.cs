@@ -65,7 +65,6 @@ namespace RPG.Characters
       }
       else
       {
-        // isAttacking = false;
         aiController.SetTarget(transform);
       }
 
