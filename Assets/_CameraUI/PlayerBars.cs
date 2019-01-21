@@ -5,11 +5,10 @@ using UnityEngine.UI;
 
 namespace RPG.Characters
 {
-  [RequireComponent(typeof(CanvasRenderer))]
   public class PlayerBars : MonoBehaviour
   {
-    [SerializeField] CanvasRenderer healthPoolHolder;
-    [SerializeField] CanvasRenderer manaPoolHolder;
+    [SerializeField] Image healthPoolHolder;
+    [SerializeField] Image manaPoolHolder;
     Player player;
 
     // Use this for initialization
@@ -27,14 +26,12 @@ namespace RPG.Characters
     
     void UpdateHealthPool()
     {
-      float yValue = (185f * player.healthAsPercentage) - 185f;
-      healthPoolHolder.transform.localPosition = new Vector3(0, yValue, 0);
+      healthPoolHolder.fillAmount = player.healthAsPercentage;
     }
 
     void UpdateManaPool()
     {
-      float yValue = (185f * player.manaAsPercentage) - 185f;
-      manaPoolHolder.transform.localPosition = new Vector3(0, yValue, 0);
+      manaPoolHolder.fillAmount = player.manaAsPercentage;
     }
   }
 }

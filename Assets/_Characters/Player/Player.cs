@@ -27,6 +27,9 @@ namespace RPG.Characters
     public float healthAsPercentage { get { return currentHealthPoints / maxHealthPoints; } }
     public float manaAsPercentage { get { return currentManaPoints / maxManaPoints; } }
 
+    const string DEATH_TRIGGER = "Death";
+    const string ATTACK_TRIGGER = "Trigger";
+
     CameraRaycaster cameraRaycaster;
     GameObject currentTarget;
     float currentHealthPoints;
@@ -34,22 +37,23 @@ namespace RPG.Characters
     float lastHitTime = 1f;
 
     AudioSource audioSource;
+    Animator animator;
 
     public void TakeDamage(float damage)
     {
+      bool isDead = currentHealthPoints - damage <= 0;
       ReduceHealth(damage);
       audioSource.clip = damageSounds[UnityEngine.Random.Range(0, damageSounds.Length)];
       audioSource.Play();
-      if (currentHealthPoints - damage <= 0)
-      {
-        StartCoroutine(KillPlayer());
-      }
+
+      if (isDead) StartCoroutine(KillPlayer());
     }
 
     IEnumerator KillPlayer()
     {
       audioSource.clip = deathSounds[UnityEngine.Random.Range(0, deathSounds.Length)];
       audioSource.Play();
+      animator.SetTrigger(DEATH_TRIGGER);
       yield return new WaitForSecondsRealtime(audioSource.clip.length); // TODO: use audio clip lenght
       SceneManager.LoadScene(0);
     }
@@ -69,6 +73,7 @@ namespace RPG.Characters
       OverrideAnimatorController();
       abilities[0].AttachComponentTo(gameObject);
       audioSource = GetComponent<AudioSource>();
+      animator = GetComponent<Animator>();
     }
 
     private void SetCurrentPoints()
@@ -159,8 +164,7 @@ namespace RPG.Characters
 
     private void AttackAnimation()
     {
-      var animator = GetComponent<Animator>();
-      animator.SetTrigger("Attack");
+      animator.SetTrigger(ATTACK_TRIGGER);
     }
 
     private bool ManaAvailable(float manaCost)
