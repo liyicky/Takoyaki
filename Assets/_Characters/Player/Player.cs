@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 using RPG.CameraUI;
 using RPG.Weapon;
 using RPG.Core;
@@ -32,6 +33,29 @@ namespace RPG.Characters
     float lastHitTime = 1f;
 
     public void TakeDamage(float damage)
+    {
+      if (currentHealthPoints - damage <= 0)
+      {
+        ReduceHealth(damage);
+        StartCoroutine(KillPlayer());
+      }
+      else
+      {  
+        ReduceHealth(damage);
+      }
+    }
+
+    IEnumerator KillPlayer()
+    {
+      Debug.Log("Death sound");
+      Debug.Log("Death Animation");
+      yield return new WaitForSecondsRealtime(2f); // TODO: use audio clip lenght
+      SceneManager.LoadScene(0);
+        // play death sound
+        // trigger death animation
+    }
+
+    private void ReduceHealth(float damage)
     {
       // Mathf.Clamp - Only allows values between two floats (i.e. 0 and maxHealth)
       currentHealthPoints = Mathf.Clamp(currentHealthPoints - damage, 0f, maxHealthPoints);
