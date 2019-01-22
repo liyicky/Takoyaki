@@ -23,6 +23,9 @@ namespace RPG.Characters
     [SerializeField] AudioClip[] damageSounds;
     [SerializeField] AudioClip[] deathSounds;
     [SerializeField] SpecialAbility[] abilities;
+    [Range(.01f, 1.0f)] [SerializeField] float criticalHitChance = .01f;
+    [SerializeField] float criticalHitMultiplayer = 2f;
+    [SerializeField] ParticleSystem critParticleSystem;
 
     public float healthAsPercentage { get { return currentHealthPoints / maxHealthPoints; } }
     public float manaAsPercentage { get { return currentManaPoints / maxManaPoints; } }
@@ -151,13 +154,25 @@ namespace RPG.Characters
       currentManaPoints = Mathf.Clamp(calculatedManaRegen + currentManaPoints, 0f, maxManaPoints);
     }
 
+    private float CalculateDamage()
+    {
+      float damageBeforeCrit = baseDamage + weaponInUse.WeaponDamage();
+      bool isCriticalHit = UnityEngine.Random.Range(0f, 1f) <= criticalHitChance;
+      if (isCriticalHit)
+      {
+        critParticleSystem.Play();
+        return damageBeforeCrit * criticalHitMultiplayer;
+      }
+      return damageBeforeCrit;
+    }
+
     private void Attack()
     {            
       var targetDistance = Vector3.Distance(currentTarget.transform.position, transform.position);
       if (targetDistance > weaponInUse.AttackRadius()) return;
       if (Time.time - lastHitTime > weaponInUse.AttackCooldown())
       {
-        (currentTarget.GetComponent(typeof(IDamageable)) as IDamageable).TakeDamage(baseDamage);
+        (currentTarget.GetComponent(typeof(IDamageable)) as IDamageable).TakeDamage(CalculateDamage());
         lastHitTime = Time.time;
         AttackAnimation();
       }

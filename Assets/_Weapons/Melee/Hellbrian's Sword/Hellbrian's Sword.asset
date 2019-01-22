@@ -17,5 +17,6 @@ MonoBehaviour:
   attackAnimation: {fileID: 7400000, guid: f94c62a8b96f5a7469ce0da8ccac09b3, type: 3}
   attackRadius: 3
   attackCooldown: 1.5
+  weaponDamage: 100
   girpTransform: {fileID: 3599785500798020040, guid: 96faaf2e5fc9249b7aebd606b634d45b,
     type: 3}
