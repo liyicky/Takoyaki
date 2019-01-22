@@ -3734,7 +3734,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 418260168, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
       propertyPath: abilities.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 418260168, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
       propertyPath: deathSounds.Array.size
@@ -3757,7 +3757,7 @@ PrefabInstance:
     - target: {fileID: 418260168, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
       propertyPath: abilities.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 57769a3f3518f42ab96d8d3dec019f78,
+      objectReference: {fileID: 11400000, guid: d2979c22f5495432b8eda71d64bdadfd,
         type: 2}
     - target: {fileID: 418260168, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
       propertyPath: deathSounds.Array.data[0]
@@ -3795,6 +3795,20 @@ PrefabInstance:
       propertyPath: damageSounds.Array.data[5]
       value: 
       objectReference: {fileID: 8300000, guid: ef84ec896b51249718e48cb6100de6ba, type: 3}
+    - target: {fileID: 418260168, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
+      propertyPath: abilities.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: c4030e155d71b42229cb487fc3dff33a,
+        type: 2}
+    - target: {fileID: 418260168, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
+      propertyPath: manaRegenRate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285742689611010354, guid: 0d9c2c6ada2234fabb233e8ebd2188c7,
+        type: 3}
+      propertyPath: m_Name
+      value: Particle Systems
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
 --- !u!1 &1165301265 stripped
@@ -6191,6 +6205,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5557013055878292069, guid: 75a43cca039264395b99698681e52275,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 34.026123
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75a43cca039264395b99698681e52275, type: 3}

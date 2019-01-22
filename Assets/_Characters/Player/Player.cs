@@ -28,7 +28,7 @@ namespace RPG.Characters
     public float manaAsPercentage { get { return currentManaPoints / maxManaPoints; } }
 
     const string DEATH_TRIGGER = "Death";
-    const string ATTACK_TRIGGER = "Trigger";
+    const string ATTACK_TRIGGER = "Attack";
 
     CameraRaycaster cameraRaycaster;
     GameObject currentTarget;
@@ -58,12 +58,6 @@ namespace RPG.Characters
       SceneManager.LoadScene(0);
     }
 
-    private void ReduceHealth(float damage)
-    {
-      // Mathf.Clamp - Only allows values between two floats (i.e. 0 and maxHealth)
-      currentHealthPoints = Mathf.Clamp(currentHealthPoints - damage, 0f, maxHealthPoints);
-    }
-
     // Start is called before the first frame update
     private void Start()
     {
@@ -71,9 +65,34 @@ namespace RPG.Characters
       SetupMouseClick();
       PutWeaponInHand();
       OverrideAnimatorController();
-      abilities[0].AttachComponentTo(gameObject);
+      AttachInitialAbilities();
       audioSource = GetComponent<AudioSource>();
       animator = GetComponent<Animator>();
+    }
+    
+    // Update is called once per frame
+    private void Update()
+    {
+      RegenMana();
+
+      if (currentHealthPoints > Mathf.Epsilon)
+      {
+        ScanForAbilityKeyDown();
+      }
+    }
+
+    private void AttachInitialAbilities()
+    {
+      for (int abilityIndex = 0; abilityIndex < abilities.Length; abilityIndex++)
+      {
+        abilities[abilityIndex].AttachComponentTo(gameObject);
+      }
+    }
+
+    private void ReduceHealth(float damage)
+    {
+      // Mathf.Clamp - Only allows values between two floats (i.e. 0 and maxHealth)
+      currentHealthPoints = Mathf.Clamp(currentHealthPoints - damage, 0f, maxHealthPoints);
     }
 
     private void SetCurrentPoints()
@@ -104,7 +123,7 @@ namespace RPG.Characters
       }
       else if (Input.GetMouseButtonDown(1))
       {
-        AttemptSpecialAbility();
+        AttemptSpecialAbility(2);
       }
     }
 
@@ -125,12 +144,6 @@ namespace RPG.Characters
       Assert.IsFalse(numberOfDominantHands > 1, "Multiple domainant hand scripts on player");
       return dominantHands[0].gameObject;
     }
-
-    // Update is called once per frame
-    private void Update()
-    {
-      RegenMana();
-    }
     
     private void RegenMana()
     {
@@ -149,15 +162,28 @@ namespace RPG.Characters
         AttackAnimation();
       }
     }
+
+    void ScanForAbilityKeyDown()
+    {
+      if (Input.GetKeyDown("1"))
+      {
+        AttemptSpecialAbility(0);
+      }
+      else if (Input.GetKeyDown("2"))
+      {
+        currentTarget = gameObject;
+        AttemptSpecialAbility(1);
+      }
+    }
     
-    private void AttemptSpecialAbility()
+    private void AttemptSpecialAbility(int abilityIndex)
     {  
-      float manaCost = abilities[0].ManaCost();
+      float manaCost = abilities[abilityIndex].ManaCost();
       if (ManaAvailable(manaCost))
       {
         var tar = currentTarget.GetComponent(typeof(IDamageable)) as IDamageable;
         var abilityParams = new AbilityUseParams(tar, baseDamage, currentTarget.transform.position);
-        abilities[0].Use(abilityParams);
+        abilities[abilityIndex].Use(abilityParams);
         currentManaPoints -= manaCost;      
       }
     }
