@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Power Attack L1
   m_EditorClassIdentifier: 
   manaCost: 75
+  particalPrefab: {fileID: 6376614738199167841, guid: afb2e0dd7b8f4498d85935970a625908,
+    type: 3}
   damDam: 1000

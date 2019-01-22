@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RPG.Core;
+using System;
 
 namespace RPG.Characters
 {
@@ -21,7 +22,20 @@ namespace RPG.Characters
 
         public void Use(AbilityUseParams useParams)
         {
-            // var ray = new Ra
+            DealRadialDamage(useParams);
+            PlayParticalEffect();
+        }
+
+        private void PlayParticalEffect()
+        {
+            GameObject prefab = Instantiate(aoeAttack.GetParticalPrefab(), transform.position, Quaternion.identity);
+            ParticleSystem myParticleSystem = prefab.GetComponent<ParticleSystem>();
+            myParticleSystem.Play();
+            Destroy(prefab, myParticleSystem.main.duration);
+        }
+
+        private void DealRadialDamage(AbilityUseParams useParams)
+        {
             RaycastHit[] hitsInRange = Physics.SphereCastAll(useParams.location, aoeAttack.Radius(), Vector3.forward);
             foreach (var target in hitsInRange)
             {
@@ -32,17 +46,6 @@ namespace RPG.Characters
                     damageable.TakeDamage(adjDamage);
                 }
             }
-        }
-
-        void Start()
-        {
-            
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            
         }
     }
 }

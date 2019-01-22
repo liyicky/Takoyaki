@@ -176,6 +176,8 @@ MonoBehaviour:
   weaponInUse: {fileID: 11400000, guid: bc65c7707efd94f6993e397b6e3a1226, type: 2}
   animatorOverrideController: {fileID: 22100000, guid: 8a4b432a279014476b1e996594a42de7,
     type: 2}
+  damageSounds: []
+  deathSounds: []
   abilities: []
 --- !u!23 &227254689783392905
 MeshRenderer:

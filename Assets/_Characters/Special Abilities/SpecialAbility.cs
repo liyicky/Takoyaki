@@ -22,6 +22,7 @@ namespace RPG.Characters
     {
         [Header("Speical Ability General")]
         [SerializeField] float manaCost = 0f;
+        [SerializeField] GameObject particalPrefab = null;
 
         protected ISpecialAbility behaviour;
 
@@ -35,6 +36,11 @@ namespace RPG.Characters
         public float ManaCost()
         {
             return manaCost;
+        }
+
+        public GameObject GetParticalPrefab()
+        {
+            return particalPrefab;
         }
     }
 

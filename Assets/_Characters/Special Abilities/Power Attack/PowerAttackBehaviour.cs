@@ -22,18 +22,15 @@ namespace RPG.Characters
         {
             float adjDamage = useParams.baseDamage + powerAttack.Damage();
             useParams.target.TakeDamage(adjDamage);
+            PlayParticleEffect();
         }
 
-        // Start is called before the first frame update
-        void Start()
+        void PlayParticleEffect()
         {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            
+            GameObject prefab = Instantiate(powerAttack.GetParticalPrefab(), transform.position, Quaternion.identity);
+            ParticleSystem myParticleSystem = prefab.GetComponent<ParticleSystem>();
+            myParticleSystem.Play();
+            Destroy(prefab, myParticleSystem.main.duration);
         }
     }
 }
