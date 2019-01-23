@@ -6,10 +6,9 @@ using RPG.Core;
 
 namespace RPG.Characters
 {
-  public class Enemy : MonoBehaviour, IDamageable
+  public class Enemy : MonoBehaviour
   {
 
-    [SerializeField] float maxHealthPoints = 100f;
     [SerializeField] float aggroRadius = 10f;
     [SerializeField] float attackRadius = 5f;
     [SerializeField] float damagePerShot = 9f;
@@ -19,33 +18,25 @@ namespace RPG.Characters
     [SerializeField] GameObject projectileSocket;
     [SerializeField] Vector3 aimOffset = new Vector3(0f, 1f, 0f);
 
-    public float healthAsPercentage { get { return currentHealthPoints / maxHealthPoints; } }
 
-    float currentHealthPoints;
     Player player = null;
     bool isAttacking = false;
-
-    public void TakeDamage(float damage)
-    {
-      currentHealthPoints = Mathf.Clamp(currentHealthPoints - damage, 0f, maxHealthPoints);
-    }
 
     // Start is called before the first frame update
     void Start()
     {
       // TODO: create singlton system to keep track of player and camera at all times
       player = FindObjectOfType<Player>();
-      currentHealthPoints = maxHealthPoints;
     }
 
     // Update is called once per frame
     void Update()
     {
-      if (player.healthAsPercentage <= Mathf.Epsilon)
-      { 
-        StopAllCoroutines();
-        Destroy(this);
-      }
+      // if (player.healthAsPercentage <= Mathf.Epsilon)
+      // { 
+      //   StopAllCoroutines();
+      //   Destroy(this);
+      // }
       float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
 
       if (distanceToPlayer <= attackRadius && !isAttacking)
@@ -68,11 +59,6 @@ namespace RPG.Characters
       else
       {
         // aiController.SetTarget(transform);
-      }
-
-      if (currentHealthPoints <= 0f)
-      {
-        Destroy(gameObject);
       }
     }
 

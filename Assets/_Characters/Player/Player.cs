@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.SceneManagement;
 using RPG.CameraUI;
 using RPG.Core;
 using System;
@@ -11,35 +10,30 @@ namespace RPG.Characters
 {
   [RequireComponent(typeof(CameraRaycaster))]
 
-  public class Player : MonoBehaviour, IDamageable
+  public class Player : MonoBehaviour
   {
-    [SerializeField] float maxHealthPoints = 100f;
+    
     [SerializeField] float maxManaPoints = 100f;
     [SerializeField] float manaRegenRate = 1f;
     [SerializeField] float baseDamage = 10f;
     [SerializeField] Weapon weaponInUse;
     [SerializeField] AnimatorOverrideController animatorOverrideController;
-    [SerializeField] AudioClip[] damageSounds;
-    [SerializeField] AudioClip[] deathSounds;
     [SerializeField] SpecialAbility[] abilities;
     [Range(.01f, 1.0f)] [SerializeField] float criticalHitChance = .01f;
     [SerializeField] float criticalHitMultiplayer = 2f;
     [SerializeField] ParticleSystem critParticleSystem;
 
-    public float healthAsPercentage { get { return currentHealthPoints / maxHealthPoints; } }
     public float manaAsPercentage { get { return currentManaPoints / maxManaPoints; } }
 
-    const string DEATH_TRIGGER = "Death";
     const string ATTACK_TRIGGER = "Attack";
 
     CameraRaycaster cameraRaycaster;
     GameObject currentTarget;
     GameObject currentWeapon;
-    float currentHealthPoints;
+    
     float currentManaPoints;
     float lastHitTime = 1f;
 
-    AudioSource audioSource;
     Animator animator;
 
     public void PutWeaponInHand(Weapon weaponConfig)
@@ -52,43 +46,26 @@ namespace RPG.Characters
       currentWeapon.transform.localRotation = weaponInUse.girpTransform.localRotation;
     }
 
-    public void TakeDamage(float damage)
-    {
-      bool isDead = currentHealthPoints - damage <= 0;
-      ReduceHealth(damage);
-      audioSource.clip = damageSounds[UnityEngine.Random.Range(0, damageSounds.Length)];
-      audioSource.Play();
 
-      if (isDead) StartCoroutine(KillPlayer());
-    }
-
-    IEnumerator KillPlayer()
-    {
-      audioSource.clip = deathSounds[UnityEngine.Random.Range(0, deathSounds.Length)];
-      audioSource.Play();
-      animator.SetTrigger(DEATH_TRIGGER);
-      yield return new WaitForSecondsRealtime(audioSource.clip.length); // TODO: use audio clip lenght
-      SceneManager.LoadScene(0);
-    }
 
     // Start is called before the first frame update
     private void Start()
     {
-      SetCurrentPoints();
       SetupMouseClick();
       PutWeaponInHand(weaponInUse);
       SetAttackAnimation();
       AttachInitialAbilities();
-      audioSource = GetComponent<AudioSource>();
+      
       animator = GetComponent<Animator>();
+      currentManaPoints = maxManaPoints;
     }
     
     // Update is called once per frame
     private void Update()
     {
       RegenMana();
-
-      if (currentHealthPoints > Mathf.Epsilon)
+      var healthPercentage = GetComponent<HealthSystem>().healthAsPercentage;
+      if (healthPercentage > Mathf.Epsilon)
       {
         ScanForAbilityKeyDown();
       }
@@ -100,18 +77,6 @@ namespace RPG.Characters
       {
         abilities[abilityIndex].AttachAbilityTo(gameObject);
       }
-    }
-
-    private void ReduceHealth(float damage)
-    {
-      // Mathf.Clamp - Only allows values between two floats (i.e. 0 and maxHealth)
-      currentHealthPoints = Mathf.Clamp(currentHealthPoints - damage, 0f, maxHealthPoints);
-    }
-
-    private void SetCurrentPoints()
-    {
-      currentHealthPoints = maxHealthPoints;
-      currentManaPoints = maxManaPoints;
     }
 
     private void SetAttackAnimation()

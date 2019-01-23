@@ -43,6 +43,11 @@ namespace RPG.Characters
       UpdateAnimator();
     }
 
+    public void Kill()
+    {
+      // to allow death signaling
+    }
+
     private void Start()
     {
       CameraRaycaster cameraRaycaster = Camera.main.GetComponent<CameraRaycaster>();
