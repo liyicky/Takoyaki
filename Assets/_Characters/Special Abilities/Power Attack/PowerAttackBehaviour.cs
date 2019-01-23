@@ -4,33 +4,18 @@ using UnityEngine;
 
 namespace RPG.Characters
 {    
-    public class PowerAttackBehaviour : MonoBehaviour, ISpecialAbility
+    public class PowerAttackBehaviour : AbilityBehaviour
     {
-        PowerAttack powerAttack;
-
         public float ManaCost()
         {
             return ManaCost();
         }
 
-        public void SetConfig(PowerAttack powerAttackToSet)
+        public override void Use(AbilityUseParams useParams)
         {
-            this.powerAttack = powerAttackToSet;
-        }
-
-        public void Use(AbilityUseParams useParams)
-        {
-            float adjDamage = useParams.baseDamage + powerAttack.Damage();
+            float adjDamage = useParams.baseDamage + (ability as PowerAttack).Damage();
             useParams.target.TakeDamage(adjDamage);
             PlayParticleEffect();
-        }
-
-        void PlayParticleEffect()
-        {
-            GameObject prefab = Instantiate(powerAttack.GetParticalPrefab(), transform.position, Quaternion.identity);
-            ParticleSystem myParticleSystem = prefab.GetComponent<ParticleSystem>();
-            myParticleSystem.Play();
-            Destroy(prefab, myParticleSystem.main.duration);
         }
     }
 }

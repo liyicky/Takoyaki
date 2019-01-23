@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AOE Attack L1
   m_EditorClassIdentifier: 
   manaCost: 50
-  particalPrefab: {fileID: 8998070499364024084, guid: ac0bfae208d724670b57a4b4cf7c1804,
+  particalPrefab: {fileID: 8541896849719581660, guid: 8719f1f3f12ea4ccd9772c01c07009b3,
     type: 3}
   radius: 5
   damage: 50

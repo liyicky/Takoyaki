@@ -24,7 +24,7 @@ namespace RPG.Characters
         [SerializeField] float manaCost = 0f;
         [SerializeField] GameObject particalPrefab = null;
 
-        protected ISpecialAbility behaviour;
+        protected AbilityBehaviour behaviour;
 
         abstract public void AttachComponentTo(GameObject gameObjectToAttachTo);
 
@@ -42,10 +42,5 @@ namespace RPG.Characters
         {
             return particalPrefab;
         }
-    }
-
-    public interface ISpecialAbility {
-        void Use(AbilityUseParams useParams);
-        float ManaCost(); 
     }
 }

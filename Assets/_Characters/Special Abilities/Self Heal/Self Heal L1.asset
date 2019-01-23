@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Self Heal L1
   m_EditorClassIdentifier: 
   manaCost: 10
-  particalPrefab: {fileID: 6376614738199167841, guid: df14a38eb6fb743b4a2c094fb0faa6eb,
+  particalPrefab: {fileID: 1000707350577985477, guid: 304d694037ae84ba5a69bf201c89bc55,
     type: 3}
   heal: 200

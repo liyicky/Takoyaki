@@ -6,43 +6,28 @@ using System;
 
 namespace RPG.Characters
 {
-    public class AOEAttackBehaviour : MonoBehaviour, ISpecialAbility
+    public class AOEAttackBehaviour : AbilityBehaviour
     {
-        AOEAttack aoeAttack;
-
         public float ManaCost()
         {
             return ManaCost();
         }
 
-        public void SetConfig(AOEAttack aoeAttackToSet)
-        {
-            this.aoeAttack = aoeAttackToSet;
-        }
-
-        public void Use(AbilityUseParams useParams)
+        public override void Use(AbilityUseParams useParams)
         {
             DealRadialDamage(useParams);
-            PlayParticalEffect();
-        }
-
-        private void PlayParticalEffect()
-        {
-            GameObject prefab = Instantiate(aoeAttack.GetParticalPrefab(), transform.position, Quaternion.identity);
-            ParticleSystem myParticleSystem = prefab.GetComponent<ParticleSystem>();
-            myParticleSystem.Play();
-            Destroy(prefab, myParticleSystem.main.duration);
+            PlayParticleEffect();
         }
 
         private void DealRadialDamage(AbilityUseParams useParams)
         {
-            RaycastHit[] hitsInRange = Physics.SphereCastAll(useParams.location, aoeAttack.Radius(), Vector3.forward);
+            RaycastHit[] hitsInRange = Physics.SphereCastAll(useParams.location, (ability as AOEAttack).Radius(), Vector3.forward);
             foreach (var target in hitsInRange)
             {
                 var damageable = target.collider.GetComponent<IDamageable>();
                 if (damageable != null)
                 {
-                    float adjDamage = aoeAttack.Damage() + useParams.baseDamage;
+                    float adjDamage = (ability as AOEAttack).Damage() + useParams.baseDamage;
                     damageable.TakeDamage(adjDamage);
                 }
             }

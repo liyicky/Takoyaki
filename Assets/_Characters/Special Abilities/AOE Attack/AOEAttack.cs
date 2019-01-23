@@ -15,7 +15,7 @@ namespace RPG.Characters
         public override void AttachComponentTo(GameObject gameObjectToAttachTo)
         {
             var behaviourComponent = gameObjectToAttachTo.AddComponent<AOEAttackBehaviour>();
-            behaviourComponent.SetConfig(this);
+            behaviourComponent.SetAbility(this);
             behaviour = behaviourComponent;
         }
 

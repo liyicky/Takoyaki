@@ -6,32 +6,17 @@ using System;
 
 namespace RPG.Characters
 {
-    public class SelfHealBehaviour : MonoBehaviour, ISpecialAbility
+    public class SelfHealBehaviour : AbilityBehaviour
     {
-        SelfHeal selfHeal;
-
         public float ManaCost()
         {
             return ManaCost();
         }
 
-        public void SetConfig(SelfHeal selfHealToSet)
+        public override void Use(AbilityUseParams useParams)
         {
-            this.selfHeal = selfHealToSet;
-        }
-
-        public void Use(AbilityUseParams useParams)
-        {
-            useParams.target.TakeDamage(selfHeal.Heal());
-            PlayParticalEffect();
-        }
-
-        private void PlayParticalEffect()
-        {
-            GameObject prefab = Instantiate(selfHeal.GetParticalPrefab(), transform.position, Quaternion.identity);
-            ParticleSystem myParticleSystem = prefab.GetComponent<ParticleSystem>();
-            myParticleSystem.Play();
-            Destroy(prefab, myParticleSystem.main.duration);
+            useParams.target.TakeDamage((ability as SelfHeal).Heal());
+            PlayParticleEffect();
         }
     }
 }
