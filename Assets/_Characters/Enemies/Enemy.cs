@@ -19,14 +19,14 @@ namespace RPG.Characters
     [SerializeField] Vector3 aimOffset = new Vector3(0f, 1f, 0f);
 
 
-    Player player = null;
+    PlayerControl player = null;
     bool isAttacking = false;
 
     // Start is called before the first frame update
     void Start()
     {
       // TODO: create singlton system to keep track of player and camera at all times
-      player = FindObjectOfType<Player>();
+      // player = FindObjectOfType<Player>();
     }
 
     // Update is called once per frame

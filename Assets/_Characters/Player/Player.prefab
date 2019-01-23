@@ -9476,8 +9476,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseDamage: 10
   weaponInUse: {fileID: 11400000, guid: 65860b5822c514293a67054c42febe93, type: 2}
-  animatorOverrideController: {fileID: 22100000, guid: 8a4b432a279014476b1e996594a42de7,
-    type: 2}
   criticalHitChance: 0.724
   criticalHitMultiplayer: 2
   critParticleSystem: {fileID: 1258726467}

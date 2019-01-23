@@ -43,7 +43,7 @@ namespace RPG.Characters
 		float stationaryTurnSpeed = 360;
 		float turnAmount;
 		float forwardAmount;
-    // bool isInDirectMode = false;
+    bool isAlive = true;
         
     // Callback
 		public void OnAnimatorMove() {
@@ -55,16 +55,14 @@ namespace RPG.Characters
 			}
 		}
 
-    public void Move(Vector3 move)
-    {
-      SetForwardAndTurn(move);
-      ApplyExtraTurnRotation();
-      UpdateAnimator();
-    }
-
     public void Kill()
     {
-      // to allow death signaling
+      isAlive = false;
+    }
+
+    public void SetDestination(Vector3 destination)
+    {
+      agent.SetDestination(destination);
     }
     
     private void Awake() {
@@ -73,50 +71,42 @@ namespace RPG.Characters
 
     void AddRequiredComponents()
     {
-        animator = gameObject.AddComponent<Animator>();
-        animator.runtimeAnimatorController = animatorController;
-        animator.avatar = characterAvatar;
+      animator = gameObject.AddComponent<Animator>();
+      animator.runtimeAnimatorController = animatorController;
+      animator.avatar = characterAvatar;
 
-        var capsuleCollider = gameObject.AddComponent<CapsuleCollider>();
-        capsuleCollider.center = capsuleCenter;
-        capsuleCollider.radius = capsuleRadius;
-        capsuleCollider.height = capsuleHeight;
+      var capsuleCollider = gameObject.AddComponent<CapsuleCollider>();
+      capsuleCollider.center = capsuleCenter;
+      capsuleCollider.radius = capsuleRadius;
+      capsuleCollider.height = capsuleHeight;
 
-        rigidbody = gameObject.AddComponent<Rigidbody>();
+      rigidbody = gameObject.AddComponent<Rigidbody>();
 
-        agent = gameObject.AddComponent<NavMeshAgent>();
-        agent.updateRotation = false;
-        agent.updatePosition = true;
-        agent.stoppingDistance = stoppingDistance;
-        agent.speed = agentSpeed;
-        agent.angularSpeed = agentAngularSpeed;
-        agent.acceleration = agentAcceleration;
-        agent.stoppingDistance = agentStoppingDistance;
-        agent.radius = agentOVRadius;
+      agent = gameObject.AddComponent<NavMeshAgent>();
+      agent.updateRotation = false;
+      agent.updatePosition = true;
+      agent.stoppingDistance = stoppingDistance;
+      agent.speed = agentSpeed;
+      agent.angularSpeed = agentAngularSpeed;
+      agent.acceleration = agentAcceleration;
+      agent.stoppingDistance = agentStoppingDistance;
+      agent.radius = agentOVRadius;
 
-        var mashRenderer = gameObject.AddComponent<MeshRenderer>();
+      var mashRenderer = gameObject.AddComponent<MeshRenderer>();
 
-        var meshFilter = gameObject.AddComponent<MeshFilter>();
-        meshFilter.mesh = characterMesh;
+      var meshFilter = gameObject.AddComponent<MeshFilter>();
+      meshFilter.mesh = characterMesh;
 
-        var audioSource = gameObject.AddComponent<AudioSource>();
-
-        
-
+      var audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     private void Start()
     {
-      CameraRaycaster cameraRaycaster = Camera.main.GetComponent<CameraRaycaster>();
-
-      cameraRaycaster.onMouseOverTerrain += ProcessMouseMovement;
-      cameraRaycaster.onMouseOverEnemy += ProcessEnemyInteraction;
-
       rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
     }
 
     private void Update() {
-      if (agent.remainingDistance > agent.stoppingDistance)
+      if (agent.remainingDistance > agent.stoppingDistance && isAlive)
       {
         Move(agent.desiredVelocity);
       }
@@ -126,20 +116,11 @@ namespace RPG.Characters
       }
     }
 
-    private void ProcessEnemyInteraction(Enemy enemy)
+    private void Move(Vector3 move)
     {
-      if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(1))
-      {
-        agent.SetDestination(enemy.transform.position);
-      }
-    }
-
-    private void ProcessMouseMovement(Vector3 destination)
-    {
-      if (Input.GetMouseButton(0))
-      {
-        agent.SetDestination(destination);
-      }
+      SetForwardAndTurn(move);
+      ApplyExtraTurnRotation();
+      UpdateAnimator();
     }
 
     private void SetForwardAndTurn(Vector3 move)

@@ -8,27 +8,22 @@ using System;
 
 namespace RPG.Characters
 {
-  [RequireComponent(typeof(CameraRaycaster))]
-
-  public class Player : MonoBehaviour
+  public class PlayerControl : MonoBehaviour
   {
     [SerializeField] float baseDamage = 10f;
     [SerializeField] Weapon weaponInUse;
-    [SerializeField] AnimatorOverrideController animatorOverrideController;
     [Range(.01f, 1.0f)] [SerializeField] float criticalHitChance = .01f;
     [SerializeField] float criticalHitMultiplayer = 2f;
     [SerializeField] ParticleSystem critParticleSystem;
 
     const string ATTACK_TRIGGER = "Attack";
 
+    Character character;
     CameraRaycaster cameraRaycaster;
     GameObject currentTarget;
     GameObject currentWeapon;
     SpecialAbilities abilities;
-    
-    
     float lastHitTime = 1f;
-
     Animator animator;
 
     public void PutWeaponInHand(Weapon weaponConfig)
@@ -44,11 +39,12 @@ namespace RPG.Characters
     // Start is called before the first frame update
     private void Start()
     {
-      SetupMouseClick();
+      RegisterForMouseEvents();
       PutWeaponInHand(weaponInUse);
       SetAttackAnimation();
       abilities = GetComponent<SpecialAbilities>();
       animator = GetComponent<Animator>();
+      character = GetComponent<Character>();
     }
     
     // Update is called once per frame
@@ -63,15 +59,14 @@ namespace RPG.Characters
 
     private void SetAttackAnimation()
     {
-      var animator = GetComponent<Animator>();
-      animator.runtimeAnimatorController = animatorOverrideController;
-      animatorOverrideController["DEFAULT ATTACK"] = weaponInUse.GetAttackAnimClip(); // TODO: remove const
+      // GetComponent<AnimatorOverrideController>()["DEFAULT ATTACK"] = weaponInUse.GetAttackAnimClip(); // TODO: remove const
     }
 
-    private void SetupMouseClick()
+    private void RegisterForMouseEvents()
     {
       cameraRaycaster = Camera.main.GetComponent<CameraRaycaster>();
       cameraRaycaster.onMouseOverEnemy += ProcessEnemyInteraction;
+      cameraRaycaster.onMouseOverTerrain += ProcessTerrainInteraction;
     }
 
     private void ProcessEnemyInteraction(Enemy enemy)
@@ -87,6 +82,14 @@ namespace RPG.Characters
       }
     }
 
+    private void ProcessTerrainInteraction(Vector3 destination)
+    {
+      if (Input.GetMouseButton(0))
+      {
+        character.SetDestination(destination);
+      }
+    }
+
     private GameObject RequestDominantHand()
     {
       var dominantHands = GetComponentsInChildren<DominantHand>();
@@ -96,8 +99,6 @@ namespace RPG.Characters
       return dominantHands[0].gameObject;
     }
     
-
-
     private float CalculateDamage()
     {
       float damageBeforeCrit = baseDamage + weaponInUse.WeaponDamage();
