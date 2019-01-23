@@ -6,16 +6,15 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 	[RequireComponent(typeof(Animator))]
 	public class ThirdPersonCharacter : MonoBehaviour
 	{
-		[SerializeField] float movingTurnSpeed = 360;
-		[SerializeField] float stationaryTurnSpeed = 360;
 		[SerializeField] float groundCheckDistance = 0.1f;
 
 		Rigidbody rigidbody;
 		Animator animator;
+		float movingTurnSpeed = 360;
+		float stationaryTurnSpeed = 360;
 		float origGroundCheckDistance;
 		float turnAmount;
 		float forwardAmount;
-
 
 		void Start()
 		{
