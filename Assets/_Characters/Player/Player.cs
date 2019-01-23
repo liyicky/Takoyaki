@@ -83,7 +83,7 @@ namespace RPG.Characters
       }
       else if (Input.GetMouseButtonDown(1))
       {
-        abilities.AttemptSpecialAbility(2);
+        abilities.AttemptSpecialAbility(2, currentTarget);
       }
     }
 
@@ -124,14 +124,14 @@ namespace RPG.Characters
 
     void ScanForAbilityKeyDown()
     {
+      if (!currentTarget) currentTarget = gameObject;
       if (Input.GetKeyDown("1"))
       {
-        abilities.AttemptSpecialAbility(0);
+        abilities.AttemptSpecialAbility(0, currentTarget);
       }
       else if (Input.GetKeyDown("2"))
       {
-        currentTarget = gameObject;
-        abilities.AttemptSpecialAbility(1);
+        abilities.AttemptSpecialAbility(1, gameObject);
       }
     }
 

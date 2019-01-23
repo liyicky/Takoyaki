@@ -5,13 +5,32 @@ using RPG.CameraUI;
 
 namespace RPG.Characters
   {
-  [RequireComponent(typeof (NavMeshAgent))]
-  [RequireComponent(typeof(CameraRaycaster))]
-	[RequireComponent(typeof(Rigidbody))]
-	[RequireComponent(typeof(Animator))]
-
-  public class CharacterMovement : MonoBehaviour
+  [SelectionBase]
+  public class Character : MonoBehaviour
   {
+    [Header("Setup Settings")]
+    [SerializeField] RuntimeAnimatorController animatorController;
+    [SerializeField] AnimatorOverrideController animatorOverrideController;
+    [SerializeField] Avatar characterAvatar;
+
+    [Header("Capsule Settings")]
+    [SerializeField] Vector3 capsuleCenter = new Vector3(0f, 0.8f, 0f);
+    [SerializeField] float capsuleRadius = 0.2f;
+    [SerializeField] float capsuleHeight = 1.6f;
+
+    [Header("NavMeshAgent Steering Settings")]
+    [SerializeField] float agentSpeed = 1f;
+    [SerializeField] float agentAngularSpeed = 120f;
+    [SerializeField] float agentAcceleration = 8f;
+    [SerializeField] float agentStoppingDistance = 3f;
+
+    [Header("NavMeshAgent Obstical Avoidance Settings")]
+    [SerializeField] float agentOVRadius = 0.1f;
+
+    [Header("MeshFilter Settings")]
+    [SerializeField] Mesh characterMesh;
+
+    [Header("Movement Settings")]
     [SerializeField] float stoppingDistance = 1f;
     [SerializeField] float moveSpeedMultiplier = 1f;
     [SerializeField] float animSpeedMultiplier = 1f;
@@ -47,16 +66,48 @@ namespace RPG.Characters
     {
       // to allow death signaling
     }
+    
+    private void Awake() {
+        AddRequiredComponents();
+    }
+
+    void AddRequiredComponents()
+    {
+        animator = gameObject.AddComponent<Animator>();
+        animator.runtimeAnimatorController = animatorController;
+        animator.avatar = characterAvatar;
+
+        var capsuleCollider = gameObject.AddComponent<CapsuleCollider>();
+        capsuleCollider.center = capsuleCenter;
+        capsuleCollider.radius = capsuleRadius;
+        capsuleCollider.height = capsuleHeight;
+
+        rigidbody = gameObject.AddComponent<Rigidbody>();
+
+        agent = gameObject.AddComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updatePosition = true;
+        agent.stoppingDistance = stoppingDistance;
+        agent.speed = agentSpeed;
+        agent.angularSpeed = agentAngularSpeed;
+        agent.acceleration = agentAcceleration;
+        agent.stoppingDistance = agentStoppingDistance;
+        agent.radius = agentOVRadius;
+
+        var mashRenderer = gameObject.AddComponent<MeshRenderer>();
+
+        var meshFilter = gameObject.AddComponent<MeshFilter>();
+        meshFilter.mesh = characterMesh;
+
+        var audioSource = gameObject.AddComponent<AudioSource>();
+
+        
+
+    }
 
     private void Start()
     {
       CameraRaycaster cameraRaycaster = Camera.main.GetComponent<CameraRaycaster>();
-      animator = GetComponent<Animator>();
-      rigidbody = GetComponent<Rigidbody>();
-      agent = GetComponent<NavMeshAgent>();
-      agent.updateRotation = false;
-      agent.updatePosition = true;
-      agent.stoppingDistance = stoppingDistance;
 
       cameraRaycaster.onMouseOverTerrain += ProcessMouseMovement;
       cameraRaycaster.onMouseOverEnemy += ProcessEnemyInteraction;

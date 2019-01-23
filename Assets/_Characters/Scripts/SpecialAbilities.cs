@@ -11,6 +11,7 @@ namespace RPG.Characters
         [SerializeField] float maxManaPoints = 100f;
         [SerializeField] float manaRegenRate = 1f;
         [SerializeField] Image manaPoolHolder;
+        [SerializeField] AudioClip oomSoundClip;
 
         public float manaAsPercentage { get { return currentManaPoints / maxManaPoints; } }
 
@@ -56,16 +57,17 @@ namespace RPG.Characters
             }
         }
 
-        public void AttemptSpecialAbility(int abilityIndex)
+        public void AttemptSpecialAbility(int abilityIndex, GameObject target = null)
         {
             float manaCost = abilities[abilityIndex].ManaCost();
             if (manaCost <= currentManaPoints)
             {
                 ConsumeMana(manaCost);
+                abilities[abilityIndex].Use(target);
             }
             else
             {
-                //TODO: play no energy sound
+                audioSource.PlayOneShot(oomSoundClip);
             }
         }
 

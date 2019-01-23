@@ -319,83 +319,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 614d11320b817c04685ec13aef76aa3a, type: 3}
---- !u!1 &129793543
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 129793544}
-  - component: {fileID: 129793546}
-  - component: {fileID: 129793545}
-  m_Layer: 0
-  m_Name: Dirt Old Hoe(Clone)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &129793544
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 129793543}
-  m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2632182378958241685}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &129793545
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 129793543}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 0754ff2960a855b4b9535c598af02f66, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!33 &129793546
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 129793543}
-  m_Mesh: {fileID: 4300002, guid: eee292b300b8dfa41be00641ff83b2a1, type: 3}
 --- !u!4 &135445758 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4203307151462902, guid: 614d11320b817c04685ec13aef76aa3a,
@@ -3242,9 +3165,53 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1165301270, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
+      propertyPath: damageSounds.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1165301270, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
+      propertyPath: deathSounds.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1165301270, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
       propertyPath: healthPoolHolder
       value: 
       objectReference: {fileID: 1664129775}
+    - target: {fileID: 1165301270, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
+      propertyPath: damageSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: ac75aed68143a437a9db40dfd703bd2d, type: 3}
+    - target: {fileID: 1165301270, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
+      propertyPath: damageSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 176327dcd23ad47dc965492a349f859f, type: 3}
+    - target: {fileID: 1165301270, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
+      propertyPath: damageSounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: db3569c4279ce42a18ec3657b0407d62, type: 3}
+    - target: {fileID: 1165301270, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
+      propertyPath: damageSounds.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: b82cd1a551df8482fad7a857f6b5cbc0, type: 3}
+    - target: {fileID: 1165301270, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
+      propertyPath: damageSounds.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: b09e84691233f49e6856f0d34fd48d5b, type: 3}
+    - target: {fileID: 1165301270, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
+      propertyPath: damageSounds.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: ef84ec896b51249718e48cb6100de6ba, type: 3}
+    - target: {fileID: 1165301270, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
+      propertyPath: deathSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 84c20efe67276402c9a59ade80ebd68d, type: 3}
+    - target: {fileID: 1165301270, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
+      propertyPath: deathSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 2505a10666c6343808f7b25668af58d6, type: 3}
+    - target: {fileID: 1165301270, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
+      propertyPath: deathSounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 371afc52b2d6b479eb2b1dec19fc3235, type: 3}
     - target: {fileID: 4106737567600775781, guid: 0d9c2c6ada2234fabb233e8ebd2188c7,
         type: 3}
       propertyPath: abilities.Array.size
@@ -3273,6 +3240,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: c4030e155d71b42229cb487fc3dff33a,
         type: 2}
+    - target: {fileID: 4106737567600775781, guid: 0d9c2c6ada2234fabb233e8ebd2188c7,
+        type: 3}
+      propertyPath: oomSoundClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 30c90f98f85b0476d83d903d78803f70, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d9c2c6ada2234fabb233e8ebd2188c7, type: 3}
 --- !u!1 &1165301265 stripped
@@ -3628,6 +3600,83 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1273715535}
   m_Mesh: {fileID: 4300000, guid: a85e374cc66f19f4ab56ea47d9f329ab, type: 3}
+--- !u!1 &1280759556
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1280759557}
+  - component: {fileID: 1280759559}
+  - component: {fileID: 1280759558}
+  m_Layer: 0
+  m_Name: Dirt Old Hoe(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1280759557
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280759556}
+  m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2632182378958241685}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1280759558
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280759556}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 0754ff2960a855b4b9535c598af02f66, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &1280759559
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280759556}
+  m_Mesh: {fileID: 4300002, guid: eee292b300b8dfa41be00641ff83b2a1, type: 3}
 --- !u!1001 &1299490213
 PrefabInstance:
   m_ObjectHideFlags: 0

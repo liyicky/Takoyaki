@@ -21,7 +21,7 @@ namespace RPG.Characters
 
         AudioSource audioSource;
         Animator animator;
-        CharacterMovement characterMovement;
+        Character character;
         float currentHealthPoints;
 
         // Start is called before the first frame update
@@ -29,7 +29,7 @@ namespace RPG.Characters
         {
             animator = GetComponent<Animator>();
             audioSource = GetComponent<AudioSource>();
-            characterMovement = GetComponent<CharacterMovement>();
+            character = GetComponent<Character>();
             SetUpCurrentHealth();
         }
 
@@ -69,7 +69,7 @@ namespace RPG.Characters
         IEnumerator KillCharacter()
         {
             StopAllCoroutines();
-            characterMovement.Kill();
+            character.Kill();
 
             animator.SetTrigger(DEATH_TRIGGER);
 
