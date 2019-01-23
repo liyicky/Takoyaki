@@ -11,11 +11,9 @@ namespace RPG.Characters
         [Header("Power Attack Specific")]
         [SerializeField] float damDam;
 
-        public override void AttachComponentTo(GameObject gameObjectToAttachTo)
+        protected override AbilityBehaviour GetBehaviourComponent(GameObject objectToAttachTo)
         {
-            var behaviourComponent = gameObjectToAttachTo.AddComponent<PowerAttackBehaviour>();
-            behaviourComponent.SetAbility(this);
-            behaviour = behaviourComponent;
+            return objectToAttachTo.AddComponent<PowerAttackBehaviour>();
         }
 
         public float Damage()

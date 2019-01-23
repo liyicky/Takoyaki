@@ -20,14 +20,21 @@ namespace RPG.Characters
     }
     public abstract class SpecialAbility : ScriptableObject
     {
-        [Header("Speical Ability General")]
+        [Header("Special Ability General")]
         [SerializeField] float manaCost = 0f;
         [SerializeField] GameObject particalPrefab = null;
         [SerializeField] AudioClip[] audioClips;
 
         protected AbilityBehaviour behaviour;
 
-        abstract public void AttachComponentTo(GameObject gameObjectToAttachTo);
+        protected abstract AbilityBehaviour GetBehaviourComponent(GameObject objectToAttachTo);
+
+        public void AttachAbilityTo(GameObject objectToAttachTo)
+        {
+            AbilityBehaviour behaviourComponent = GetBehaviourComponent(objectToAttachTo);
+            behaviourComponent.SetAbility(this);
+            behaviour = behaviourComponent;
+        }
 
         public void Use(AbilityUseParams useParams)
         {
