@@ -23,6 +23,7 @@ namespace RPG.Characters
         [Header("Speical Ability General")]
         [SerializeField] float manaCost = 0f;
         [SerializeField] GameObject particalPrefab = null;
+        [SerializeField] AudioClip[] audioClips;
 
         protected AbilityBehaviour behaviour;
 
@@ -41,6 +42,11 @@ namespace RPG.Characters
         public GameObject GetParticalPrefab()
         {
             return particalPrefab;
+        }
+
+        public AudioClip RandomAudioClip()
+        {
+            return audioClips[Random.Range(0, audioClips.Length)];
         }
     }
 }

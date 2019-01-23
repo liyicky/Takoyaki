@@ -15,4 +15,6 @@ MonoBehaviour:
   manaCost: 10
   particalPrefab: {fileID: 1000707350577985477, guid: 304d694037ae84ba5a69bf201c89bc55,
     type: 3}
+  audioClips:
+  - {fileID: 8300000, guid: 3bee4e2fbdf6a48d092e74a39e9a6be4, type: 3}
   heal: 200

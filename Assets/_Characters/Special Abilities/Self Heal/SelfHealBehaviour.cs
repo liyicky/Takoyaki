@@ -16,6 +16,7 @@ namespace RPG.Characters
         public override void Use(AbilityUseParams useParams)
         {
             useParams.target.TakeDamage((ability as SelfHeal).Heal());
+            PlayAbilitySound();
             PlayParticleEffect();
         }
     }

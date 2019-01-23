@@ -15,4 +15,6 @@ MonoBehaviour:
   manaCost: 75
   particalPrefab: {fileID: 6376614738199167841, guid: afb2e0dd7b8f4498d85935970a625908,
     type: 3}
+  audioClips:
+  - {fileID: 8300000, guid: a21edf9057fc7405a80fadcc0f1d1cab, type: 3}
   damDam: 1000

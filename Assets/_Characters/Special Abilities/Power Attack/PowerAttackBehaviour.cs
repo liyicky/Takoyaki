@@ -15,6 +15,7 @@ namespace RPG.Characters
         {
             float adjDamage = useParams.baseDamage + (ability as PowerAttack).Damage();
             useParams.target.TakeDamage(adjDamage);
+            PlayAbilitySound();
             PlayParticleEffect();
         }
     }

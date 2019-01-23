@@ -41,5 +41,12 @@ namespace RPG.Characters
             Destroy(particlePrefab);
             yield return new WaitForEndOfFrame();
         }
+
+        protected void PlayAbilitySound()
+        {
+            var abilitySound = ability.RandomAudioClip();
+            var audoSource = GetComponent<AudioSource>();
+            audoSource.PlayOneShot(abilitySound);
+        }
     }
 }
