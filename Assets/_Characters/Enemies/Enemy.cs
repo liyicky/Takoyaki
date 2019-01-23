@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.ThirdPerson;
 using RPG.CameraUI;
-using RPG.Weapon;
 using RPG.Core;
 
 namespace RPG.Characters
@@ -24,7 +23,6 @@ namespace RPG.Characters
     public float healthAsPercentage { get { return currentHealthPoints / maxHealthPoints; } }
 
     float currentHealthPoints;
-    AICharacterControl aiController = null;
     Player player = null;
     bool isAttacking = false;
 
@@ -36,8 +34,6 @@ namespace RPG.Characters
     // Start is called before the first frame update
     void Start()
     {
-      aiController = GetComponent<AICharacterControl>();
-
       // TODO: create singlton system to keep track of player and camera at all times
       player = FindObjectOfType<Player>();
       currentHealthPoints = maxHealthPoints;
@@ -68,11 +64,11 @@ namespace RPG.Characters
 
       if (distanceToPlayer <= aggroRadius)
       {   
-        aiController.SetTarget(player.transform);
+        // aiController.SetTarget(player.transform);
       }
       else
       {
-        aiController.SetTarget(transform);
+        // aiController.SetTarget(transform);
       }
 
       if (currentHealthPoints <= 0f)

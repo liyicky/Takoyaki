@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 using RPG.CameraUI;
-using RPG.Weapon;
 using RPG.Core;
 using System;
 
@@ -18,7 +17,7 @@ namespace RPG.Characters
     [SerializeField] float maxManaPoints = 100f;
     [SerializeField] float manaRegenRate = 1f;
     [SerializeField] float baseDamage = 10f;
-    [SerializeField] RPG.Weapon.Weapon weaponInUse;
+    [SerializeField] Weapon weaponInUse;
     [SerializeField] AnimatorOverrideController animatorOverrideController;
     [SerializeField] AudioClip[] damageSounds;
     [SerializeField] AudioClip[] deathSounds;
@@ -35,12 +34,23 @@ namespace RPG.Characters
 
     CameraRaycaster cameraRaycaster;
     GameObject currentTarget;
+    GameObject currentWeapon;
     float currentHealthPoints;
     float currentManaPoints;
     float lastHitTime = 1f;
 
     AudioSource audioSource;
     Animator animator;
+
+    public void PutWeaponInHand(Weapon weaponConfig)
+    {
+      weaponInUse = weaponConfig;
+      GameObject dominantHand = RequestDominantHand();
+      Destroy(currentWeapon);
+      currentWeapon = Instantiate(weaponInUse.GetWeaponPrefab(), dominantHand.transform) as GameObject;
+      currentWeapon.transform.localPosition = weaponInUse.girpTransform.localPosition;
+      currentWeapon.transform.localRotation = weaponInUse.girpTransform.localRotation;
+    }
 
     public void TakeDamage(float damage)
     {
@@ -66,8 +76,8 @@ namespace RPG.Characters
     {
       SetCurrentPoints();
       SetupMouseClick();
-      PutWeaponInHand();
-      OverrideAnimatorController();
+      PutWeaponInHand(weaponInUse);
+      SetAttackAnimation();
       AttachInitialAbilities();
       audioSource = GetComponent<AudioSource>();
       animator = GetComponent<Animator>();
@@ -104,7 +114,7 @@ namespace RPG.Characters
       currentManaPoints = maxManaPoints;
     }
 
-    private void OverrideAnimatorController()
+    private void SetAttackAnimation()
     {
       var animator = GetComponent<Animator>();
       animator.runtimeAnimatorController = animatorOverrideController;
@@ -128,15 +138,6 @@ namespace RPG.Characters
       {
         AttemptSpecialAbility(2);
       }
-    }
-
-    private void PutWeaponInHand()
-    {
-      var weaponPrefab = weaponInUse.GetWeaponPrefab();
-      GameObject dominantHand = RequestDominantHand();
-      GameObject weapon = Instantiate(weaponPrefab, dominantHand.transform) as GameObject;
-      weapon.transform.localPosition = weaponInUse.girpTransform.localPosition;
-      weapon.transform.localRotation = weaponInUse.girpTransform.localRotation;
     }
 
     private GameObject RequestDominantHand()
@@ -205,6 +206,7 @@ namespace RPG.Characters
 
     private void AttackAnimation()
     {
+      SetAttackAnimation();
       animator.SetTrigger(ATTACK_TRIGGER);
     }
 

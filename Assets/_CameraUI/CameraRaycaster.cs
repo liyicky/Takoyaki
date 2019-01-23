@@ -9,8 +9,9 @@ namespace RPG.CameraUI
 	public class CameraRaycaster : MonoBehaviour
 	{
 		// INSPECTOR PROPERTIES RENDERED BY CUSTOM EDITOR SCRIPT
-		[SerializeField] Texture2D walkCursor = null;
-    [SerializeField] Texture2D targetCursor = null;
+		[SerializeField] Texture2D walkCursor;
+    [SerializeField] Texture2D targetCursor;
+		[SerializeField] Texture2D unknownCursor;
 		[SerializeField] Vector2 cursorHotspot = new Vector2(0, 5);
 
 		const int walkableLayerNumber = 9;
@@ -42,7 +43,7 @@ namespace RPG.CameraUI
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			if (RaycastForEnemy(ray)) { return; }
 			if (RaycastForWalkable(ray)) { return; }
-			Cursor.SetCursor(targetCursor, cursorHotspot, CursorMode.Auto);
+			Cursor.SetCursor(unknownCursor, cursorHotspot, CursorMode.Auto);
 		}
 
     private bool RaycastForEnemy(Ray ray)
