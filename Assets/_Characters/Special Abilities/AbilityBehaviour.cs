@@ -9,7 +9,7 @@ namespace RPG.Characters
 
         const float PARTICLE_CLEANUP_DELAY = 20f;
 
-        public abstract void Use(AbilityUseParams useParams);
+        public abstract void Use(GameObject target);
 
         public void SetAbility(SpecialAbility ability)
         {
@@ -31,14 +31,14 @@ namespace RPG.Characters
         }
 
         // TODO: AOE particles are not being destroyed
-        IEnumerator DestroyParticleWhenFinished(GameObject particlePrefab)
+        IEnumerator DestroyParticleWhenFinished(GameObject target)
         {
-            while (particlePrefab.GetComponent<ParticleSystem>().isPlaying)
+            while (target.GetComponent<ParticleSystem>().isPlaying)
             {
                 yield return new WaitForSeconds(PARTICLE_CLEANUP_DELAY);
             }
 
-            Destroy(particlePrefab);
+            Destroy(target);
             yield return new WaitForEndOfFrame();
         }
 

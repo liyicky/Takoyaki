@@ -13,24 +13,20 @@ namespace RPG.Characters
             return ManaCost();
         }
 
-        public override void Use(AbilityUseParams useParams)
+        public override void Use(GameObject target)
         {
-            DealRadialDamage(useParams);
+            DealRadialDamage(target);
             PlayAbilitySound();
             PlayParticleEffect();
         }
 
-        private void DealRadialDamage(AbilityUseParams useParams)
+        private void DealRadialDamage(GameObject target)
         {
-            RaycastHit[] hitsInRange = Physics.SphereCastAll(useParams.location, (ability as AOEAttack).Radius(), Vector3.forward);
-            foreach (var target in hitsInRange)
+            RaycastHit[] hitsInRange = Physics.SphereCastAll(target.transform.position, (ability as AOEAttack).Radius(), Vector3.forward);
+            foreach (var tar in hitsInRange)
             {
-                var damageable = target.collider.GetComponent<IDamageable>();
-                if (damageable != null)
-                {
-                    float adjDamage = (ability as AOEAttack).Damage() + useParams.baseDamage;
-                    damageable.TakeDamage(adjDamage);
-                }
+                var healthSys = tar.collider.GetComponent<HealthSystem>();
+                if (healthSys) healthSys.TakeDamage((ability as AOEAttack).Damage());
             }
         }
     }

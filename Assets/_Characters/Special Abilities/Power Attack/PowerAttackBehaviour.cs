@@ -11,10 +11,10 @@ namespace RPG.Characters
             return ManaCost();
         }
 
-        public override void Use(AbilityUseParams useParams)
+        public override void Use(GameObject target)
         {
-            float adjDamage = useParams.baseDamage + (ability as PowerAttack).Damage();
-            useParams.target.TakeDamage(adjDamage);
+            float adjDamage = (ability as PowerAttack).Damage();
+            target.GetComponent<HealthSystem>().TakeDamage(adjDamage);
             PlayAbilitySound();
             PlayParticleEffect();
         }

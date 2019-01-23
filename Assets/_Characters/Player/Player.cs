@@ -61,7 +61,6 @@ namespace RPG.Characters
       }
     }
 
-
     private void SetAttackAnimation()
     {
       var animator = GetComponent<Animator>();
@@ -117,7 +116,7 @@ namespace RPG.Characters
       if (targetDistance > weaponInUse.AttackRadius()) return;
       if (Time.time - lastHitTime > weaponInUse.AttackCooldown())
       {
-        (currentTarget.GetComponent(typeof(IDamageable)) as IDamageable).TakeDamage(CalculateDamage());
+        currentTarget.GetComponent<HealthSystem>().TakeDamage(CalculateDamage());
         lastHitTime = Time.time;
         AttackAnimation();
       }

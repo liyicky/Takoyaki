@@ -13,9 +13,9 @@ namespace RPG.Characters
             return ManaCost();
         }
 
-        public override void Use(AbilityUseParams useParams)
+        public override void Use(GameObject target)
         {
-            useParams.target.TakeDamage((ability as SelfHeal).Heal());
+            target.GetComponent<HealthSystem>().TakeDamage((ability as SelfHeal).Heal());
             PlayAbilitySound();
             PlayParticleEffect();
         }

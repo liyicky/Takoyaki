@@ -48,10 +48,9 @@ namespace RPG.Characters
 
     private void DamageIfDamageables(Collision other)
     {
-      Component damageableComponent = other.gameObject.GetComponent(typeof(IDamageable));
-      if (shooter && damageableComponent && shooter.layer != other.gameObject.layer)
+      if (shooter && shooter.layer != other.gameObject.layer)
       {
-        (damageableComponent as IDamageable).TakeDamage(damageCaused);
+        other.gameObject.GetComponent<HealthSystem>().TakeDamage(damageCaused);
       }
       Destroy(gameObject, DESTROY_DELAY);
     }

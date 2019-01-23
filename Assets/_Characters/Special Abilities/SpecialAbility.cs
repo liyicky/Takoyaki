@@ -5,19 +5,6 @@ using RPG.Core;
 
 namespace RPG.Characters
 {   
-    public struct AbilityUseParams
-    {
-        public IDamageable target;
-        public float baseDamage;
-        public Vector3 location;
-
-        public AbilityUseParams(IDamageable target, float baseDamage, Vector3 location)
-        {
-            this.target = target;
-            this.baseDamage = baseDamage;
-            this.location = location;
-        }
-    }
     public abstract class SpecialAbility : ScriptableObject
     {
         [Header("Special Ability General")]
@@ -36,9 +23,9 @@ namespace RPG.Characters
             behaviour = behaviourComponent;
         }
 
-        public void Use(AbilityUseParams useParams)
+        public void Use(GameObject target)
         {
-            behaviour.Use(useParams);
+            behaviour.Use(target);
         }
 
         public float ManaCost()
