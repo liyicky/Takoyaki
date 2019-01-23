@@ -12,26 +12,21 @@ namespace RPG.Characters
 
   public class Player : MonoBehaviour
   {
-    
-    [SerializeField] float maxManaPoints = 100f;
-    [SerializeField] float manaRegenRate = 1f;
     [SerializeField] float baseDamage = 10f;
     [SerializeField] Weapon weaponInUse;
     [SerializeField] AnimatorOverrideController animatorOverrideController;
-    [SerializeField] SpecialAbility[] abilities;
     [Range(.01f, 1.0f)] [SerializeField] float criticalHitChance = .01f;
     [SerializeField] float criticalHitMultiplayer = 2f;
     [SerializeField] ParticleSystem critParticleSystem;
-
-    public float manaAsPercentage { get { return currentManaPoints / maxManaPoints; } }
 
     const string ATTACK_TRIGGER = "Attack";
 
     CameraRaycaster cameraRaycaster;
     GameObject currentTarget;
     GameObject currentWeapon;
+    SpecialAbilities abilities;
     
-    float currentManaPoints;
+    
     float lastHitTime = 1f;
 
     Animator animator;
@@ -46,24 +41,19 @@ namespace RPG.Characters
       currentWeapon.transform.localRotation = weaponInUse.girpTransform.localRotation;
     }
 
-
-
     // Start is called before the first frame update
     private void Start()
     {
       SetupMouseClick();
       PutWeaponInHand(weaponInUse);
       SetAttackAnimation();
-      AttachInitialAbilities();
-      
+      abilities = GetComponent<SpecialAbilities>();
       animator = GetComponent<Animator>();
-      currentManaPoints = maxManaPoints;
     }
     
     // Update is called once per frame
     private void Update()
     {
-      RegenMana();
       var healthPercentage = GetComponent<HealthSystem>().healthAsPercentage;
       if (healthPercentage > Mathf.Epsilon)
       {
@@ -71,13 +61,6 @@ namespace RPG.Characters
       }
     }
 
-    private void AttachInitialAbilities()
-    {
-      for (int abilityIndex = 0; abilityIndex < abilities.Length; abilityIndex++)
-      {
-        abilities[abilityIndex].AttachAbilityTo(gameObject);
-      }
-    }
 
     private void SetAttackAnimation()
     {
@@ -101,7 +84,7 @@ namespace RPG.Characters
       }
       else if (Input.GetMouseButtonDown(1))
       {
-        AttemptSpecialAbility(2);
+        abilities.AttemptSpecialAbility(2);
       }
     }
 
@@ -114,11 +97,7 @@ namespace RPG.Characters
       return dominantHands[0].gameObject;
     }
     
-    private void RegenMana()
-    {
-      float calculatedManaRegen = (0.01f * manaRegenRate) * currentManaPoints;
-      currentManaPoints = Mathf.Clamp(calculatedManaRegen + currentManaPoints, 0f, maxManaPoints);
-    }
+
 
     private float CalculateDamage()
     {
@@ -148,24 +127,12 @@ namespace RPG.Characters
     {
       if (Input.GetKeyDown("1"))
       {
-        AttemptSpecialAbility(0);
+        abilities.AttemptSpecialAbility(0);
       }
       else if (Input.GetKeyDown("2"))
       {
         currentTarget = gameObject;
-        AttemptSpecialAbility(1);
-      }
-    }
-    
-    private void AttemptSpecialAbility(int abilityIndex)
-    {  
-      float manaCost = abilities[abilityIndex].ManaCost();
-      if (ManaAvailable(manaCost))
-      {
-        var tar = currentTarget.GetComponent(typeof(IDamageable)) as IDamageable;
-        var abilityParams = new AbilityUseParams(tar, baseDamage, currentTarget.transform.position);
-        abilities[abilityIndex].Use(abilityParams);
-        currentManaPoints -= manaCost;      
+        abilities.AttemptSpecialAbility(1);
       }
     }
 
@@ -173,11 +140,6 @@ namespace RPG.Characters
     {
       SetAttackAnimation();
       animator.SetTrigger(ATTACK_TRIGGER);
-    }
-
-    private bool ManaAvailable(float manaCost)
-    {
-      return currentManaPoints >= manaCost;
     }
   }
 }
