@@ -7,14 +7,19 @@ using RPG.Core;
 namespace RPG.Characters
 {
 
+  [RequireComponent(typeof(Character))]
   [RequireComponent(typeof(WeaponSystem))]
   public class EnemyAI : MonoBehaviour
   {
     [SerializeField] float aggroRadius = 10f;
 
+    Character character;
     PlayerControl player;
     float currentWeaponRange;
-    bool isAttacking = false;
+    float distanceToPlayer;
+    
+    enum State { idle, attacking, patrolling, chasing }
+    State state = State.idle;
 
     // Start is called before the first frame update
     void Start()
@@ -25,32 +30,37 @@ namespace RPG.Characters
     // Update is called once per frame
     void Update()
     {
+      character = GetComponent<Character>();
       WeaponSystem weaponSystem = GetComponent<WeaponSystem>();
       currentWeaponRange = weaponSystem.GetCurrentWeapon().AttackRadius();
+      distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
 
-
-      float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-
-      if (distanceToPlayer <= currentWeaponRange && !isAttacking)
+      if (distanceToPlayer > aggroRadius && state != State.patrolling)
       {
-        isAttacking = true;
-        // float randomizedDelay = fireInterval * Random.Range(fireInterval - fireVariation, fireInterval + fireVariation);
-        // InvokeRepeating("FireProjectile", 0f, randomizedDelay); //TODO: Switch to coroutines
+        //stop and start patrolling
+        state = State.patrolling;
+        StopAllCoroutines();
       }
-
-      if (distanceToPlayer > currentWeaponRange)
+      if (distanceToPlayer <= aggroRadius && state != State.chasing)
       {
-        isAttacking = false;
-        CancelInvoke("FireProjectile");
+        StopAllCoroutines();
+        StartCoroutine(ChasePlayer());
       }
-
-      if (distanceToPlayer <= aggroRadius)
-      {   
-        // aiController.SetTarget(player.transform);
-      }
-      else
+      if (distanceToPlayer <= currentWeaponRange && state != State.attacking)
       {
-        // aiController.SetTarget(transform);
+        state = State.attacking;
+        StopAllCoroutines();
+        // stop and attack the player
+      }
+    }
+
+    IEnumerator ChasePlayer()
+    {
+      state = State.chasing;
+      while (distanceToPlayer >= currentWeaponRange)
+      {
+        character.SetDestination(player.transform.position);
+        yield return new WaitForEndOfFrame();
       }
     }
 
