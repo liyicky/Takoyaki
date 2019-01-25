@@ -7,6 +7,7 @@ using RPG.Core;
 namespace RPG.Characters
 {
 
+  [RequireComponent(typeof(HealthSystem))]
   [RequireComponent(typeof(Character))]
   [RequireComponent(typeof(WeaponSystem))]
   public class EnemyAI : MonoBehaviour

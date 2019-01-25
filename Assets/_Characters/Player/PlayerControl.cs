@@ -56,7 +56,7 @@ namespace RPG.Characters
       currentTarget = enemy.gameObject;
       if (Input.GetMouseButtonDown(0))
       {
-        weaponSystem.Attack();
+        weaponSystem.Attack(enemy.gameObject);
       }
       else if (Input.GetMouseButtonDown(1))
       {

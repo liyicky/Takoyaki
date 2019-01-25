@@ -73,16 +73,50 @@ namespace RPG.Characters
             return damageBeforeCrit;
         }
 
-        public void Attack()
+        public void Attack(GameObject target)
         {            
-            var targetDistance = Vector3.Distance(currentTarget.transform.position, transform.position);
-            if (targetDistance > weaponInUse.AttackRadius()) return;
-            if (Time.time - lastHitTime > weaponInUse.AttackCooldown())
+            currentTarget = target;
+            // StopAllCoroutines();
+            StartCoroutine(AttackTargetRepeatedly());
+            // var targetDistance = Vector3.Distance(currentTarget.transform.position, transform.position);
+            // if (targetDistance > weaponInUse.AttackRadius()) return;
+            // if (Time.time - lastHitTime > weaponInUse.AttackCooldown())
+            // {
+            //     currentTarget.GetComponent<HealthSystem>().TakeDamage(CalculateDamage());
+            //     lastHitTime = Time.time;
+            //     AttackAnimation();
+            // }
+        }
+
+        IEnumerator DamageAfterDelay(float damageDelay)
+        {
+            yield return new WaitForSecondsRealtime(damageDelay);
+            currentTarget.GetComponent<HealthSystem>().TakeDamage(CalculateDamage());            
+        }
+
+        IEnumerator AttackTargetRepeatedly()
+        {
+            
+            while (character.StillAlive() && currentTarget.GetComponent<Character>().StillAlive())
             {
-                currentTarget.GetComponent<HealthSystem>().TakeDamage(CalculateDamage());
-                lastHitTime = Time.time;
-                AttackAnimation();
+                float weaponHitPeriod = weaponInUse.AttackCooldown();
+                float timeToWait = weaponHitPeriod * character.GetAnimSpeedMultiplier();
+
+                bool isTimeToHitAgain = Time.time - lastHitTime > timeToWait;
+                if (isTimeToHitAgain)
+                {
+                    AttackTargetOnce();
+                    lastHitTime = Time.time;
+                }
+                yield return new WaitForSeconds(timeToWait);
             }
+        }
+
+        private void AttackTargetOnce()
+        {
+            transform.LookAt(currentTarget.transform);
+            StartCoroutine(DamageAfterDelay(1f));
+            AttackAnimation();
         }
 
         private GameObject RequestDominantHand()

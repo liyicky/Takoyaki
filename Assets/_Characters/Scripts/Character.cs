@@ -65,9 +65,19 @@ namespace RPG.Characters
       isAlive = false;
     }
 
+    public bool StillAlive()
+    {
+      return GetComponent<HealthSystem>().healthAsPercentage > Mathf.Epsilon;
+    }
+
     public void SetDestination(Vector3 destination)
     {
       agent.SetDestination(destination);
+    }
+
+    public float GetAnimSpeedMultiplier()
+    {
+      return animator.speed;
     }
     
     private void Awake() {
