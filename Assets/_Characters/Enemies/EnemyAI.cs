@@ -12,9 +12,14 @@ namespace RPG.Characters
   public class EnemyAI : MonoBehaviour
   {
     [SerializeField] float aggroRadius = 10f;
+    [SerializeField] float waypointTolerance = 0.2f;
+    [SerializeField] WaypointContainer patrolPath;
+
 
     Character character;
     PlayerControl player;
+
+    int nextWaypointIndex;
     float currentWeaponRange;
     float distanceToPlayer;
     
@@ -38,8 +43,9 @@ namespace RPG.Characters
       if (distanceToPlayer > aggroRadius && state != State.patrolling)
       {
         //stop and start patrolling
-        state = State.patrolling;
+
         StopAllCoroutines();
+        StartCoroutine(Patrol());
       }
       if (distanceToPlayer <= aggroRadius && state != State.chasing)
       {
@@ -54,6 +60,18 @@ namespace RPG.Characters
       }
     }
 
+    IEnumerator Patrol()
+    {
+      state = State.patrolling;
+      while (true)
+      {
+        Vector3 nextWaypointPos = patrolPath.transform.GetChild(nextWaypointIndex).transform.position;
+        character.SetDestination(nextWaypointPos);
+        CycleWaypointWhenClose(nextWaypointPos);
+        yield return new WaitForSecondsRealtime(0.5f);
+      }
+    }
+
     IEnumerator ChasePlayer()
     {
       state = State.chasing;
@@ -62,6 +80,15 @@ namespace RPG.Characters
         character.SetDestination(player.transform.position);
         yield return new WaitForEndOfFrame();
       }
+    }
+
+    private void CycleWaypointWhenClose(Vector3 waypointPos)
+    {
+      if (Vector3.Distance(transform.position, waypointPos) <= waypointTolerance)
+      {
+        nextWaypointIndex = (nextWaypointIndex + 1) % patrolPath.transform.childCount;
+      }
+
     }
 
     void OnDrawGizmos()
