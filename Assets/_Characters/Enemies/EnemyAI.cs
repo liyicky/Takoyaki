@@ -57,7 +57,6 @@ namespace RPG.Characters
       {
         state = State.attacking;
         StopAllCoroutines();
-        // stop and attack the player
       }
     }
 

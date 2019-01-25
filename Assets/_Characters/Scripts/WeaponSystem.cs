@@ -21,8 +21,6 @@ namespace RPG.Characters
         GameObject currentTarget;
         Character character;
 
-
-        // Start is called before the first frame update
         void Start()
         {
             character = GetComponent<Character>();
@@ -32,18 +30,29 @@ namespace RPG.Characters
             PutWeaponInHand(weaponInUse);
         }
 
-        // Update is called once per frame
         void Update()
         {
-            var player = GetComponent<PlayerControl>();
-            if (player)
+            bool targetIsDead;
+            bool targetIsOutOfRange;
+            bool characterIsDead = !character.StillAlive();
+
+            if (currentTarget == null)
             {
-                currentTarget = player.GetCurrentTarget();
+                targetIsDead = false;
+                targetIsOutOfRange = false;
             }
             else
-            {
-                currentTarget = gameObject;
+            {   
+                var targetDistance = Vector3.Distance(currentTarget.transform.position, transform.position);
+                targetIsDead = !currentTarget.GetComponent<Character>().StillAlive();
+                targetIsOutOfRange = targetDistance > weaponInUse.AttackRadius();
             }
+
+            if (characterIsDead || targetIsDead || targetIsOutOfRange)
+            {
+                StopAllCoroutines();
+            }
+
         }
 
         public Weapon GetCurrentWeapon()
