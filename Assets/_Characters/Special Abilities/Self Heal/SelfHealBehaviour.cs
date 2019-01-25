@@ -17,6 +17,7 @@ namespace RPG.Characters
         {
             target.GetComponent<HealthSystem>().TakeDamage((ability as SelfHeal).Heal());
             PlayAbilitySound();
+            PlayAnimation();
             PlayParticleEffect();
         }
     }

@@ -8,6 +8,7 @@ namespace RPG.Characters
         protected SpecialAbility ability;
 
         const float PARTICLE_CLEANUP_DELAY = 20f;
+        const string ABILITY_TRIGGER = "Ability";
 
         public abstract void Use(GameObject target = null);
 
@@ -40,6 +41,12 @@ namespace RPG.Characters
 
             Destroy(target);
             yield return new WaitForEndOfFrame();
+        }
+
+        protected void PlayAnimation()
+        {
+            GetComponent<Character>().GetOverrideController()["SPECIAL ABILITY"] = ability.GetAbilityAnimation();
+            GetComponent<Animator>().SetTrigger(ABILITY_TRIGGER);
         }
 
         protected void PlayAbilitySound()

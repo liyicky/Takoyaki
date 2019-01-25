@@ -16,6 +16,7 @@ namespace RPG.Characters
             float adjDamage = (ability as PowerAttack).Damage();
             target.GetComponent<HealthSystem>().TakeDamage(adjDamage);
             PlayAbilitySound();
+            PlayAnimation();
             PlayParticleEffect();
         }
     }
