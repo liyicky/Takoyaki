@@ -70,6 +70,12 @@ namespace RPG.Characters
             currentWeapon.transform.localRotation = weaponInUse.girpTransform.localRotation;
         }
 
+        public void StopAttacking()
+        {
+            animator.StopPlayback();
+            StopAllCoroutines();
+        }
+
         private float CalculateDamage()
         {
             float damageBeforeCrit = baseDamage + weaponInUse.WeaponDamage();
@@ -87,14 +93,6 @@ namespace RPG.Characters
             currentTarget = target;
             // StopAllCoroutines();
             StartCoroutine(AttackTargetRepeatedly());
-            // var targetDistance = Vector3.Distance(currentTarget.transform.position, transform.position);
-            // if (targetDistance > weaponInUse.AttackRadius()) return;
-            // if (Time.time - lastHitTime > weaponInUse.AttackCooldown())
-            // {
-            //     currentTarget.GetComponent<HealthSystem>().TakeDamage(CalculateDamage());
-            //     lastHitTime = Time.time;
-            //     AttackAnimation();
-            // }
         }
 
         IEnumerator DamageAfterDelay(float damageDelay)
@@ -124,7 +122,7 @@ namespace RPG.Characters
         private void AttackTargetOnce()
         {
             transform.LookAt(currentTarget.transform);
-            StartCoroutine(DamageAfterDelay(1f));
+            StartCoroutine(DamageAfterDelay(weaponInUse.GetDamageDelay()));
             AttackAnimation();
         }
 

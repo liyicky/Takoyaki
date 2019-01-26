@@ -19,6 +19,7 @@ namespace RPG.Characters
 
     Character character;
     PlayerControl player;
+    WeaponSystem weaponSystem;
 
     int nextWaypointIndex;
     float currentWeaponRange;
@@ -31,6 +32,7 @@ namespace RPG.Characters
     void Start()
     {
       player = FindObjectOfType<PlayerControl>();
+      weaponSystem = GetComponent<WeaponSystem>();
     }
 
     // Update is called once per frame
@@ -43,8 +45,6 @@ namespace RPG.Characters
 
       if (distanceToPlayer > aggroRadius && state != State.patrolling)
       {
-        //stop and start patrolling
-
         StopAllCoroutines();
         StartCoroutine(Patrol());
       }
@@ -57,6 +57,7 @@ namespace RPG.Characters
       {
         state = State.attacking;
         StopAllCoroutines();
+        StartCoroutine(MoveAndAttack(player.gameObject));
       }
     }
 
@@ -82,13 +83,34 @@ namespace RPG.Characters
       }
     }
 
+    IEnumerator MoveAndTarget(GameObject target)
+    {
+      character.SetDestination(target.transform.position);
+      while (!IsTargetInRange(target))
+      {
+        yield return new WaitForEndOfFrame();
+      }
+      yield return new WaitForEndOfFrame();
+    }
+
+    IEnumerator MoveAndAttack(GameObject target)
+    {
+      yield return StartCoroutine(MoveAndTarget(target));
+      weaponSystem.Attack(target);
+    }
+
     private void CycleWaypointWhenClose(Vector3 waypointPos)
     {
       if (Vector3.Distance(transform.position, waypointPos) <= waypointTolerance)
       {
         nextWaypointIndex = (nextWaypointIndex + 1) % patrolPath.transform.childCount;
       }
+    }
 
+    private bool IsTargetInRange(GameObject target)
+    {
+      float distanceToTarget = Vector3.Distance(target.transform.position, transform.position);
+      return distanceToTarget <= weaponSystem.GetCurrentWeapon().AttackRadius();
     }
 
     void OnDrawGizmos()

@@ -27,15 +27,15 @@ namespace RPG.CameraUI
 
 		void Update()
     {
-      if (EventSystem.current.IsPointerOverGameObject())
-      {
-				// handle UI here
-      }
-			else
-			{
+      // if (EventSystem.current.IsPointerOverGameObject())
+      // {
+			// 	// handle UI here
+      // }
+			// else
+			// {
 				PerformRaycast();
       	// NewMethod();	
-			}
+			// }
     }
 
 		void PerformRaycast()
@@ -49,7 +49,7 @@ namespace RPG.CameraUI
     private bool RaycastForEnemy(Ray ray)
     {
 			RaycastHit hit;
-			if (Physics.Raycast(ray, out hit, maxRaycastDepth))
+			if (Physics.Raycast(ray, out hit))
 			{
 				var gameObjectHit = hit.collider.gameObject;
 				var enemyHit = gameObjectHit.GetComponent<EnemyAI>();
