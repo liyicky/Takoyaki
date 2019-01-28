@@ -106,8 +106,9 @@ namespace RPG.Characters
             
             while (character.StillAlive() && currentTarget.GetComponent<Character>().StillAlive())
             {
-                float weaponHitPeriod = weaponInUse.AttackCooldown();
-                float timeToWait = weaponHitPeriod * character.GetAnimSpeedMultiplier();
+                var animClip = weaponInUse.GetAttackAnimClip();
+                float animClipTime = animClip.length / character.GetAnimSpeedMultiplier();
+                float timeToWait = animClipTime + weaponInUse.AttackCooldown();
 
                 bool isTimeToHitAgain = Time.time - lastHitTime > timeToWait;
                 if (isTimeToHitAgain)
