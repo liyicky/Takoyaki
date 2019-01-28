@@ -20,6 +20,7 @@ namespace RPG.Characters
     Character character;
     PlayerControl player;
     WeaponSystem weaponSystem;
+    
 
     int nextWaypointIndex;
     float currentWeaponRange;
@@ -33,12 +34,12 @@ namespace RPG.Characters
     {
       player = FindObjectOfType<PlayerControl>();
       weaponSystem = GetComponent<WeaponSystem>();
+      character = GetComponent<Character>();
     }
 
     // Update is called once per frame
     void Update()
     {
-      character = GetComponent<Character>();
       WeaponSystem weaponSystem = GetComponent<WeaponSystem>();
       currentWeaponRange = weaponSystem.GetCurrentWeapon().AttackRadius();
       distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);

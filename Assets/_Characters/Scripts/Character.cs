@@ -12,6 +12,7 @@ namespace RPG.Characters
     [SerializeField] RuntimeAnimatorController animatorController;
     [SerializeField] AnimatorOverrideController animatorOverrideController;
     [SerializeField] Avatar characterAvatar;
+    [SerializeField] [Range(.1f, 1f)] float animatorForwardCap = 1f;
 
     [Header("Capsule Settings")]
     [SerializeField] Vector3 capsuleCenter = new Vector3(0f, 0.8f, 0f);
@@ -149,7 +150,7 @@ namespace RPG.Characters
     void UpdateAnimator()
 		{
 			// update the animator parameters
-			animator.SetFloat("Forward", forwardAmount, 0.1f, Time.deltaTime);
+			animator.SetFloat("Forward", forwardAmount * animatorForwardCap, 0.1f, Time.deltaTime);
 			animator.SetFloat("Turn", turnAmount, 0.1f, Time.deltaTime);
       animator.speed = animSpeedMultiplier;
 		}
