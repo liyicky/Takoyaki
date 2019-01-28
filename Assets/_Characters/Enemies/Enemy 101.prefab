@@ -48,8 +48,9 @@ MonoBehaviour:
   animatorOverrideController: {fileID: 22100000, guid: 0f2f2678c2b1c41809e2d585650df09b,
     type: 2}
   characterAvatar: {fileID: 9000000, guid: d288a0e4a2d923b46898986e979da643, type: 3}
+  animatorForwardCap: 1
   capsuleCenter: {x: 0, y: 0.8, z: 0}
-  capsuleRadius: 0.2
+  capsuleRadius: 1
   capsuleHeight: 1.6
   agentSpeed: 1
   agentAngularSpeed: 120
